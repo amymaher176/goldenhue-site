@@ -26,7 +26,8 @@ exports.handler = async (event) => {
   }
 
   // Fetch stored OTP
-  const otpStore = getStore('gh-otp');
+  const blobsConfig = { siteID: process.env.NETLIFY_SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN };
+  const otpStore = getStore({ name: 'gh-otp', ...blobsConfig });
   let otpData;
   try {
     const raw = await otpStore.get(email);
@@ -58,7 +59,7 @@ exports.handler = async (event) => {
   // ✅ Code valid — delete OTP, create/update user, issue token
   await otpStore.delete(email);
 
-  const userStore = getStore('gh-users');
+  const userStore = getStore({ name: 'gh-users', ...blobsConfig });
   const token = crypto.randomBytes(32).toString('hex');
 
   // Check if user already exists (may have old token)

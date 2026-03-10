@@ -24,7 +24,8 @@ exports.handler = async (event) => {
   }
 
   // Look up the license key
-  const licenseStore = getStore('gh-licenses');
+  const blobsConfig = { siteID: process.env.NETLIFY_SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN };
+  const licenseStore = getStore({ name: 'gh-licenses', ...blobsConfig });
   let licenseData;
   try {
     const raw = await licenseStore.get(licenseKey);
@@ -38,7 +39,7 @@ exports.handler = async (event) => {
   if (licenseData.activated && licenseData.activated_email) {
     // Already activated — re-issue a token for the same email
     const token = crypto.randomBytes(32).toString('hex');
-    const userStore = getStore('gh-users');
+    const userStore = getStore({ name: 'gh-users', ...blobsConfig });
     const userData = {
       email: licenseData.activated_email,
       type: 'pro',
@@ -54,7 +55,7 @@ exports.handler = async (event) => {
   const token = crypto.randomBytes(32).toString('hex');
   const email  = licenseData.email || `license:${licenseKey}`;
 
-  const userStore = getStore('gh-users');
+  const userStore = getStore({ name: 'gh-users', ...blobsConfig });
   const userData = {
     email,
     type: 'pro',

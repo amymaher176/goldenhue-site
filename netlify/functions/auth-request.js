@@ -30,7 +30,7 @@ exports.handler = async (event) => {
   const expiresAt = Date.now() + 15 * 60 * 1000; // 15 min
 
   // Store OTP
-  const store = getStore('gh-otp');
+  const store = getStore({ name: 'gh-otp', siteID: process.env.NETLIFY_SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN });
   await store.set(email, JSON.stringify({ code, expiresAt, attempts: 0 }));
 
   // Send email via Resend (simplest email API — free tier is 3k emails/month)

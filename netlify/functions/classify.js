@@ -32,7 +32,7 @@ exports.handler = async (event) => {
   }
 
   // ── Look up token ──
-  const store = getStore('gh-users');
+  const store = getStore({ name: 'gh-users', siteID: process.env.NETLIFY_SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN });
   let userData;
   try {
     const raw = await store.get(token);
