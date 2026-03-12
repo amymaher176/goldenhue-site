@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Your Photos — Goldenhue Color Analysis</title>
+  <meta name="description" content="Upload your photos for your personal color analysis. Your results will be ready in moments." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Josefin+Sans:wght@300;400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7KBD9Z8M2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E7KBD9Z8M2');
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f7f3ed;
+      --ink: #141210;
+      --warm-mid: #7a7268;
+      --rule: #e0d8ce;
+      --white: #fefcf9;
+      --spring: #e8602a;
+      --summer: #3d7abf;
+      --autumn: #c03a10;
+      --winter: #9c1850;
+      --ls-gold: #f2c882;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    a.wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 18px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    a.wordmark .pop { color: var(--spring); }
+    ul.nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    ul.nav-links a {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    ul.nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--spring);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── STATES ── */
+    .state { display: none; }
+    .state.active { display: block; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      height: 3px;
+      background: var(--rule);
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--ls-gold);
+      transition: width 0.5s ease;
+    }
+
+    /* ── STEP LABEL ── */
+    .step-label {
+      text-align: center;
+      padding: 20px 0 0;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+    }
+
+    /* ── INTRO STATE ── */
+    #state-intro {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+    #state-intro h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    #state-intro .intro-sub {
+      font-size: 16px;
+      color: var(--warm-mid);
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+    .checklist-heading {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 24px;
+    }
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 48px;
+    }
+    .checklist-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--ls-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-icon svg { width: 11px; height: 11px; }
+    .checklist-text strong {
+      display: block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .checklist-text p {
+      font-size: 14px;
+      color: var(--warm-mid);
+      line-height: 1.65;
+    }
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      padding: 18px 40px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-gold {
+      background: var(--ls-gold);
+      color: var(--ink);
+    }
+
+    /* ── UPLOAD STATE ── */
+    #state-upload {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+    #state-upload h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    #state-upload .upload-sub {
+      font-size: 15px;
+      color: var(--warm-mid);
+      margin-bottom: 40px;
+    }
+    .upload-slots {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .upload-slot {
+      border: 1px solid var(--rule);
+      background: var(--white);
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+    .upload-slot.dragover { border-color: var(--ls-gold); background: #fdf8ee; }
+    .upload-slot-inner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      cursor: pointer;
+    }
+    .slot-preview {
+      width: 72px;
+      height: 72px;
+      border: 1px dashed var(--rule);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      background: var(--paper);
+      position: relative;
+    }
+    .slot-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .slot-preview .slot-icon {
+      position: absolute;
+      opacity: 0.3;
+    }
+    .slot-preview img.loaded { display: block; }
+    .slot-preview img.loaded + .slot-icon { display: none; }
+    .slot-info { flex: 1; }
+    .slot-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .slot-desc {
+      font-size: 13px;
+      color: var(--warm-mid);
+      line-height: 1.5;
+    }
+    .slot-status {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .slot-status.ready { color: #6aaa64; }
+    .slot-status.error { color: var(--spring); }
+    .slot-status.empty { color: var(--rule); }
+    .slot-error-msg {
+      display: none;
+      padding: 10px 24px 14px;
+      font-size: 13px;
+      color: var(--spring);
+      border-top: 1px solid #f7e4dc;
+      background: #fdf5f1;
+    }
+    .slot-error-msg.visible { display: block; }
+    input[type="file"] { display: none; }
+    .upload-hint {
+      font-size: 13px;
+      color: var(--warm-mid);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* ── LOADING STATE ── */
+    #state-loading {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+    .loading-ring {
+      width: 64px;
+      height: 64px;
+      border: 2px solid var(--rule);
+      border-top-color: var(--ls-gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 40px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(20px, 3vw, 28px);
+      color: var(--ink);
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      min-height: 40px;
+    }
+    .loading-text.visible { opacity: 1; }
+    .loading-note {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--warm-mid);
+      text-align: center;
+    }
+
+    /* ── RESULT STATE ── */
+    #state-result {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* season reveal */
+    .result-reveal {
+      text-align: center;
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 56px;
+    }
+    .result-badge {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      background: #fdf5e6;
+      border: 1px solid var(--ls-gold);
+      padding: 6px 18px;
+      margin-bottom: 24px;
+    }
+    .result-season-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(44px, 8vw, 80px);
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .result-season-family {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      margin-bottom: 28px;
+    }
+    .result-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(18px, 3vw, 24px);
+      color: var(--warm-mid);
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .result-description {
+      font-size: 15px;
+      color: var(--warm-mid);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* result section */
+    .result-section {
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .result-section:last-child {
+      border-bottom: none;
+    }
+    .result-section-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      margin-bottom: 8px;
+    }
+    .result-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(22px, 3vw, 30px);
+      margin-bottom: 20px;
+    }
+    .result-section p {
+      font-size: 15px;
+      color: var(--warm-mid);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .result-section p:last-child { margin-bottom: 0; }
+
+    /* palette */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .palette-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .swatch-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .swatch-name {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* avoid palette */
+    .avoid-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .avoid-swatch .swatch-circle {
+      position: relative;
+      opacity: 0.7;
+    }
+    .avoid-swatch .swatch-circle::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(200,60,40,0.35);
+    }
+
+    /* feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-top: 24px;
+    }
+    .feature-cell {
+      background: var(--white);
+      padding: 20px 24px;
+    }
+    .feature-cell-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      margin-bottom: 6px;
+    }
+    .feature-cell-value {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink);
+    }
+
+    /* choose x over y */
+    .pairs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 24px;
+    }
+    .pair-row {
+      display: grid;
+      grid-template-columns: 1fr 32px 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .pair-yes {
+      color: var(--ink);
+      font-weight: 300;
+    }
+    .pair-no {
+      color: var(--warm-mid);
+      text-decoration: line-through;
+      text-align: right;
+    }
+    .pair-arrow {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 14px;
+      color: var(--ls-gold);
+      text-align: center;
+    }
+
+    /* neutrals */
+    .neutrals-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .neutral-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+    }
+    .neutral-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .neutral-name {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .neutral-desc {
+      font-size: 12px;
+      color: var(--warm-mid);
+    }
+
+    /* patterns */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .tag {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border: 1px solid var(--rule);
+      color: var(--warm-mid);
+      background: var(--white);
+    }
+    .tag.highlight {
+      border-color: var(--ls-gold);
+      color: var(--ink);
+      background: #fdf8ee;
+    }
+
+    /* makeup rows */
+    .makeup-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 24px;
+    }
+    .makeup-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .makeup-category {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      padding-top: 2px;
+    }
+    .makeup-value {
+      color: var(--ink);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* sister seasons */
+    .sisters-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .sister-card {
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+    }
+    .sister-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .sister-relation {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      margin-bottom: 10px;
+    }
+    .sister-desc {
+      font-size: 13px;
+      color: var(--warm-mid);
+      line-height: 1.65;
+    }
+
+    /* result CTAs */
+    .result-cta-section {
+      text-align: center;
+      padding: 56px 0 0;
+      border-top: 1px solid var(--rule);
+    }
+    .result-cta-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(24px, 4vw, 36px);
+      margin-bottom: 12px;
+    }
+    .result-cta-section p {
+      font-size: 15px;
+      color: var(--warm-mid);
+      margin-bottom: 32px;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 16px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    /* ── FOOTER ── */
+    footer.footer {
+      margin-top: 80px;
+      border-top: 1px solid var(--rule);
+    }
+    .footer-color-band {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      height: 6px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      padding: 60px 60px 48px;
+      background: var(--ink);
+      color: var(--white);
+    }
+    .footer-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.3;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .footer-sub {
+      font-size: 14px;
+      color: rgba(254,252,249,0.55);
+      line-height: 1.65;
+    }
+    .footer-form { display: flex; gap: 0; margin-top: 28px; }
+    .footer-form input {
+      flex: 1;
+      padding: 13px 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      border: 1px solid rgba(224,216,206,0.3);
+      background: rgba(255,255,255,0.07);
+      color: var(--white);
+      outline: none;
+    }
+    .footer-form input::placeholder { color: rgba(254,252,249,0.35); }
+    .footer-form button {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      background: var(--spring);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      background: #0d0c0a;
+      color: rgba(254,252,249,0.4);
+      font-size: 12px;
+    }
+    .footer-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: rgba(254,252,249,0.6);
+      text-decoration: none;
+    }
+    .footer-wordmark .pop { color: var(--spring); }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      ul.nav-links { display: none; }
+      #state-intro, #state-upload { padding: 40px 16px 60px; }
+      #state-result { padding: 0 16px 60px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .neutrals-grid { grid-template-columns: 1fr; }
+      .sisters-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; padding: 40px 24px 32px; gap: 32px; }
+      .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+      .pair-row { grid-template-columns: 1fr 24px 1fr; }
+      .makeup-row { grid-template-columns: 1fr; gap: 4px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="wordmark" href="https://goldenhue.shop">GOLDEN<span class="pop">HUE</span></a>
+  <ul class="nav-links">
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/what-is-color-analysis.html">Color Analysis</a></li>
+    <li><a href="https://goldenhue.shop/shop">Shop by Season</a></li>
+  </ul>
+  <a href="/color-analysis.html" class="nav-cta">How It Works</a>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progress-fill" style="width: 25%"></div>
+</div>
+
+<p class="step-label" id="step-label">Step 1 of 2 — Before You Upload</p>
+
+<!-- ══════════════════════════════════════
+     STATE 1: INTRO / CHECKLIST
+══════════════════════════════════════ -->
+<div id="state-intro" class="state active">
+
+  <h1>A few things make all the difference.</h1>
+  <p class="intro-sub">Your color analysis is only as good as your photos. These guidelines take two minutes to follow and dramatically improve accuracy. Read each one — there's a reason behind every ask.</p>
+
+  <p class="checklist-heading">Photo Checklist</p>
+
+  <div class="checklist">
+
+    <div class="checklist-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="checklist-text">
+        <strong>Natural daylight only</strong>
+        <p>Step near a window or go outside. Indoor bulbs — warm, cool, fluorescent — cast a color temperature onto your skin that can shift your analysis by an entire season family. Overcast daylight is perfect; harsh direct sun is the one exception to avoid.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="checklist-text">
+        <strong>No makeup, no filter</strong>
+        <p>We're reading your natural skin tone, lip color, and eye color. Foundation changes your undertone reading. Filters, even "natural" ones, alter hue values in ways that are hard to reverse. Come as you are — that's exactly what we need.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="checklist-text">
+        <strong>Face centered, shoulders in frame</strong>
+        <p>We analyze the color relationship between your face and your natural coloring below the chin — vein color, any chest freckles, and the transition from face to neck all contribute. Cropped headshots lose that context.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="checklist-text">
+        <strong>Natural hair visible</strong>
+        <p>Your natural hair color is a key data point — it tells us whether your coloring is high contrast, soft, or muted, and whether your warmth is dominant or recessive. Pulled back is fine; dyed is not ideal, but note it in your optional comments.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="checklist-text">
+        <strong>Plain background, neutral clothing</strong>
+        <p>Busy backgrounds and colorful tops create color bouncing — reflected hues that contaminate your skin tone reading. Wear a white t-shirt or drape a white towel over your shoulders. A plain wall behind you is ideal.</p>
+      </div>
+    </div>
+
+    <div class="checklist-item">
+      <div class="check-icon">
+        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="checklist-text">
+        <strong>Eyes open, looking toward the light</strong>
+        <p>Eye color is one of three primary signals we use. Pupils contract in bright light and reveal your true iris color — a subtle but meaningful difference for distinguishing cool-tinted eyes from warm-tinted ones.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn-primary btn-gold" onclick="goToUpload()">I'm ready — continue to upload</button>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     STATE 2: UPLOAD
+══════════════════════════════════════ -->
+<div id="state-upload" class="state">
+
+  <h2>Upload your photos.</h2>
+  <p class="upload-sub">Add one required photo and up to two more from different angles or lighting conditions. More photos = more confident results.</p>
+
+  <div class="upload-slots">
+
+    <!-- Slot 1 -->
+    <div class="upload-slot" id="slot-1"
+         ondragover="handleDragOver(event, 1)"
+         ondragleave="handleDragLeave(event, 1)"
+         ondrop="handleDrop(event, 1)">
+      <div class="upload-slot-inner" onclick="triggerFileInput(1)">
+        <div class="slot-preview" id="preview-1">
+          <img id="preview-img-1" alt="" />
+          <span class="slot-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="slot-info">
+          <p class="slot-label">Photo 1 — Required</p>
+          <p class="slot-desc">Front-facing, natural light. Tap or drag to add.</p>
+        </div>
+        <span class="slot-status empty" id="status-1">Add photo</span>
+      </div>
+      <div class="slot-error-msg" id="error-1"></div>
+      <input type="file" id="file-input-1" accept="image/*" onchange="handleFileSelect(event, 1)" />
+    </div>
+
+    <!-- Slot 2 -->
+    <div class="upload-slot" id="slot-2"
+         ondragover="handleDragOver(event, 2)"
+         ondragleave="handleDragLeave(event, 2)"
+         ondrop="handleDrop(event, 2)">
+      <div class="upload-slot-inner" onclick="triggerFileInput(2)">
+        <div class="slot-preview" id="preview-2">
+          <img id="preview-img-2" alt="" />
+          <span class="slot-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="slot-info">
+          <p class="slot-label">Photo 2 — Optional</p>
+          <p class="slot-desc">Different angle or slightly different lighting helps.</p>
+        </div>
+        <span class="slot-status empty" id="status-2">Add photo</span>
+      </div>
+      <div class="slot-error-msg" id="error-2"></div>
+      <input type="file" id="file-input-2" accept="image/*" onchange="handleFileSelect(event, 2)" />
+    </div>
+
+    <!-- Slot 3 -->
+    <div class="upload-slot" id="slot-3"
+         ondragover="handleDragOver(event, 3)"
+         ondragleave="handleDragLeave(event, 3)"
+         ondrop="handleDrop(event, 3)">
+      <div class="upload-slot-inner" onclick="triggerFileInput(3)">
+        <div class="slot-preview" id="preview-3">
+          <img id="preview-img-3" alt="" />
+          <span class="slot-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="slot-info">
+          <p class="slot-label">Photo 3 — Optional</p>
+          <p class="slot-desc">Outdoors or a wider frame can add useful context.</p>
+        </div>
+        <span class="slot-status empty" id="status-3">Add photo</span>
+      </div>
+      <div class="slot-error-msg" id="error-3"></div>
+      <input type="file" id="file-input-3" accept="image/*" onchange="handleFileSelect(event, 3)" />
+    </div>
+
+  </div>
+
+  <p class="upload-hint">Photos are processed locally — they are not stored on our servers.</p>
+
+  <button class="btn-primary btn-gold" id="analyze-btn" onclick="startAnalysis()" disabled style="opacity:0.45; cursor:not-allowed;">
+    Analyze my colors
+  </button>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     STATE 3: LOADING
+══════════════════════════════════════ -->
+<div id="state-loading" class="state">
+  <div class="loading-ring"></div>
+  <p class="loading-text" id="loading-text">Reading your undertones...</p>
+  <p class="loading-note">This usually takes about 15 seconds.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     STATE 4: RESULT (MOCKED — LIGHT SPRING)
+══════════════════════════════════════ -->
+<div id="state-result" class="state">
+
+  <!-- Season Reveal -->
+  <div class="result-reveal">
+    <div class="result-badge">Your Color Analysis Result</div>
+    <h1 class="result-season-name">Light Spring</h1>
+    <p class="result-season-family">Spring Family · Warm &amp; Clear · Light Value</p>
+    <p class="result-quote">"The season of new leaves and early blossoms — warm, delicate, and luminous."</p>
+    <p class="result-description">Your coloring is defined by warmth and lightness working together. Your best colors reflect the freshness of early spring: clear, warm, and never heavy. When you wear your palette, your skin glows, your eyes brighten, and your natural contrast reads as intentional rather than washed out.</p>
+  </div>
+
+
+  <!-- Section 1: Palette -->
+  <div class="result-section">
+    <p class="result-section-label">01 — Your Palette</p>
+    <h3>26 Colors That Were Made for You</h3>
+    <p>Every color here harmonizes with your natural undertone and value. You'll notice they share a quality: warmth, clarity, and a light-to-medium depth. Save this page for reference when you shop.</p>
+
+    <div class="palette-grid">
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#FAF5EB;"></div><span class="swatch-name">Warm White</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#FFF8E0;"></div><span class="swatch-name">Ivory</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5E6C0;"></div><span class="swatch-name">Warm Cream</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F2C882;"></div><span class="swatch-name">Honey Gold</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#EDB347;"></div><span class="swatch-name">Warm Gold</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5E070;"></div><span class="swatch-name">Buttercup</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5D4A0;"></div><span class="swatch-name">Peach Cream</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5C4A0;"></div><span class="swatch-name">Warm Peach</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F0A878;"></div><span class="swatch-name">Apricot</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F07050;"></div><span class="swatch-name">Warm Coral</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#E8602A;"></div><span class="swatch-name">True Coral</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5A0B0;"></div><span class="swatch-name">Warm Pink</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#F06068;"></div><span class="swatch-name">Clear Rose</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#E0708A;"></div><span class="swatch-name">Warm Raspberry</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#D45040;"></div><span class="swatch-name">Tomato Red</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#B0D888;"></div><span class="swatch-name">Light Apple</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#90C868;"></div><span class="swatch-name">Spring Green</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#A8D4A0;"></div><span class="swatch-name">Mint Leaf</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#80C8E0;"></div><span class="swatch-name">Sky Blue</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#5BAED4;"></div><span class="swatch-name">Warm Aqua</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#A0C8E8;"></div><span class="swatch-name">Powder Blue</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#A0A8E8;"></div><span class="swatch-name">Warm Periwinkle</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#C8A8D8;"></div><span class="swatch-name">Lilac</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#C8B8A0;"></div><span class="swatch-name">Warm Tan</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#D4C8B0;"></div><span class="swatch-name">Warm Linen</span></div>
+      <div class="palette-swatch"><div class="swatch-circle" style="background:#B8A090;"></div><span class="swatch-name">Warm Blush Nude</span></div>
+    </div>
+  </div>
+
+
+  <!-- Section 2: Avoid -->
+  <div class="result-section">
+    <p class="result-section-label">02 — Colors to Avoid</p>
+    <h3>What Competes with Your Coloring</h3>
+    <p>These colors don't fight your coloring in a dramatic way — they simply pull focus from your face, make you look tired, or create a muddiness that none of your features deserve. This is especially true near the face.</p>
+
+    <div class="avoid-grid">
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#708090;"></div><span class="swatch-name">Cool Grey</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#2F4F4F;"></div><span class="swatch-name">Dark Teal</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#8B6565;"></div><span class="swatch-name">Dusty Rose</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#4B3832;"></div><span class="swatch-name">Dark Brown</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#4B0082;"></div><span class="swatch-name">Deep Purple</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#000080;"></div><span class="swatch-name">Navy</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#556B2F;"></div><span class="swatch-name">Olive</span></div>
+      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#141210;"></div><span class="swatch-name">True Black</span></div>
+    </div>
+
+    <p style="margin-top:20px;">A note on black: it's not forbidden as an accent or in a garment far from your face. But black near the jawline creates a harsh shadow that emphasizes any unevenness in skin tone. Swap it for warm charcoal, deep cocoa, or your warmest deep palette colors.</p>
+  </div>
+
+
+  <!-- Section 3: Natural Features -->
+  <div class="result-section">
+    <p class="result-section-label">03 — Your Natural Features</p>
+    <h3>What We Read in Your Coloring</h3>
+    <p>These are the characteristics that define your season and distinguish Light Spring from its neighbors.</p>
+
+    <div class="feature-grid">
+      <div class="feature-cell">
+        <p class="feature-cell-label">Dominant Trait</p>
+        <p class="feature-cell-value">Warmth — your coloring reads warm before anything else</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Undertone</p>
+        <p class="feature-cell-value">Warm golden-peach, with a clear (not muted) quality</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Value Range</p>
+        <p class="feature-cell-value">Light to medium — your coloring doesn't carry depth well</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Contrast Level</p>
+        <p class="feature-cell-value">Low to medium — hair and skin are relatively close in value</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Clarity</p>
+        <p class="feature-cell-value">Clear — you carry bright, clean colors better than dusty or muted ones</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Eye Color Signal</p>
+        <p class="feature-cell-value">Warm-tinted iris with clear whites — no cool cast</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Section 4: Choose X Over Y -->
+  <div class="result-section">
+    <p class="result-section-label">04 — Choose This Over That</p>
+    <h3>10 Swaps That Will Change How You Look</h3>
+    <p>When you're shopping and can't cross-reference your full palette, these comparisons give you an instinct to work from.</p>
+
+    <div class="pairs-list">
+      <div class="pair-row">
+        <span class="pair-yes">Warm coral</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Cool fuchsia</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Ivory or warm white</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Bright stark white</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Sky blue or aqua</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Steel blue or navy</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Warm gold or honey</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Cool silver or platinum</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Spring green or apple</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Olive or khaki</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Warm tan or linen</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Greige or cool taupe</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Lilac or warm periwinkle</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Cool violet or deep purple</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Tomato red or clear rose</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Burgundy or wine</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Warm peach or apricot</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">Dusty mauve or muted blush</span>
+      </div>
+      <div class="pair-row">
+        <span class="pair-yes">Warm charcoal (if needed)</span>
+        <span class="pair-arrow">→</span>
+        <span class="pair-no">True black near the face</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Section 5: Best Neutrals -->
+  <div class="result-section">
+    <p class="result-section-label">05 — Your Best Neutrals</p>
+    <h3>The Four Colors to Build Your Wardrobe Around</h3>
+    <p>These are your most versatile, wearable non-colors — the ones that can anchor any outfit while still working with your coloring.</p>
+
+    <div class="neutrals-grid">
+      <div class="neutral-card">
+        <div class="neutral-swatch" style="background:#FAF5EB;"></div>
+        <div>
+          <p class="neutral-name">Warm Ivory</p>
+          <p class="neutral-desc">Your white. Wear near the face instead of stark white.</p>
+        </div>
+      </div>
+      <div class="neutral-card">
+        <div class="neutral-swatch" style="background:#D4C8B0;"></div>
+        <div>
+          <p class="neutral-name">Warm Linen</p>
+          <p class="neutral-desc">A natural base tone. Pairs with everything in your palette.</p>
+        </div>
+      </div>
+      <div class="neutral-card">
+        <div class="neutral-swatch" style="background:#C8B8A0;"></div>
+        <div>
+          <p class="neutral-name">Warm Tan</p>
+          <p class="neutral-desc">Your navy equivalent. Grounded but never harsh.</p>
+        </div>
+      </div>
+      <div class="neutral-card">
+        <div class="neutral-swatch" style="background:#6B5A48;"></div>
+        <div>
+          <p class="neutral-name">Warm Cocoa</p>
+          <p class="neutral-desc">Your dark anchor. Use where others might use black.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Section 6: Patterns -->
+  <div class="result-section">
+    <p class="result-section-label">06 — Patterns &amp; Prints</p>
+    <h3>How Prints Work for Your Season</h3>
+    <p>Your coloring is delicate enough that heavy, high-contrast patterns can overwhelm it. The prints that work best for you tend to be organic, light-value, and warm-toned.</p>
+    <p>Look for prints where the background color is one of your palette colors, and the pattern elements are also within your palette — this keeps the overall effect harmonious rather than clashing.</p>
+
+    <div class="tag-list">
+      <span class="tag highlight">Watercolor florals</span>
+      <span class="tag highlight">Warm ditsy prints</span>
+      <span class="tag highlight">Soft paisley</span>
+      <span class="tag highlight">Warm animal print</span>
+      <span class="tag highlight">Light stripe in palette colors</span>
+      <span class="tag">Botanical prints</span>
+      <span class="tag">Sun-faded patterns</span>
+      <span class="tag">Warm ikat</span>
+      <span class="tag">Loose geometric</span>
+      <span class="tag">Abstract warm watercolor</span>
+    </div>
+
+    <p style="margin-top:20px;">Avoid: high-contrast black-and-white prints, cool geometric patterns, dark moody florals, and anything with a black background. These read as a costume on your coloring — the pattern dominates, and you disappear into it.</p>
+  </div>
+
+
+  <!-- Section 7: Hair -->
+  <div class="result-section">
+    <p class="result-section-label">07 — Hair</p>
+    <h3>Colors That Look Like They Grew There</h3>
+    <p>The best hair color for a Light Spring is one that looks plausible for your coloring — warm, clear, and light-to-medium in depth. When hair looks natural, the eye goes to the face. When it doesn't, the eye goes to the hair.</p>
+
+    <div class="tag-list" style="margin-bottom: 20px;">
+      <span class="tag highlight">Golden blonde</span>
+      <span class="tag highlight">Strawberry blonde</span>
+      <span class="tag highlight">Warm honey highlights</span>
+      <span class="tag highlight">Light warm auburn</span>
+      <span class="tag highlight">Sun-kissed balayage</span>
+      <span class="tag">Caramel lowlights</span>
+      <span class="tag">Warm coppery tones</span>
+    </div>
+
+    <p><strong style="font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">Approach with caution:</strong></p>
+    <div class="tag-list" style="margin-top: 10px;">
+      <span class="tag">Cool ash blonde</span>
+      <span class="tag">Platinum</span>
+      <span class="tag">Jet black</span>
+      <span class="tag">Cool dark brown</span>
+      <span class="tag">Violet-toned hair</span>
+    </div>
+
+    <p style="margin-top:20px;">Cool or very dark hair color can create a stark contrast against your light, warm face. If you're going darker, stay in the warm brown family and keep it at least two shades lighter than you think you want to go.</p>
+  </div>
+
+
+  <!-- Section 8: Makeup -->
+  <div class="result-section">
+    <p class="result-section-label">08 — Makeup</p>
+    <h3>A Palette That Enhances, Not Transforms</h3>
+    <p>Light Spring makeup should look like you, only more so. The goal is warmth, freshness, and clarity — not drama. When your makeup is in your palette, the overall look appears effortless even when it isn't.</p>
+
+    <div class="makeup-rows">
+      <div class="makeup-row">
+        <span class="makeup-category">Foundation</span>
+        <span class="makeup-value">Warm or neutral-warm undertone. Look for descriptors like "peach," "golden," "warm beige." Avoid anything described as "pink," "cool," or "rosy."</span>
+      </div>
+      <div class="makeup-row">
+        <span class="makeup-category">Blush</span>
+        <span class="makeup-value">Warm peach, apricot, and soft coral work beautifully. Avoid cool pinks and berry tones. A light dusting of warm peach can double as an eyeshadow.</span>
+      </div>
+      <div class="makeup-row">
+        <span class="makeup-category">Lip</span>
+        <span class="makeup-value">Warm coral, peachy-pink, and clear warm rose. Your lips likely have natural warmth — enhance it rather than replacing it with a cool or dark shade.</span>
+      </div>
+      <div class="makeup-row">
+        <span class="makeup-category">Eye Shadow</span>
+        <span class="makeup-value">Peach, warm taupe, warm gold, coral-toned champagne, and soft warm brown. Avoid grey, charcoal, and cool-toned purples near the eye — they flatten your features.</span>
+      </div>
+      <div class="makeup-row">
+        <span class="makeup-category">Liner</span>
+        <span class="makeup-value">Warm brown is your most flattering liner. Black liner can work for evening but should be smudged to soften it. Avoid stark black pencil for daytime.</span>
+      </div>
+      <div class="makeup-row">
+        <span class="makeup-category">Bronzer</span>
+        <span class="makeup-value">Yes — use a warm, golden-toned bronzer rather than a terracotta or cool-toned one. You tan beautifully and bronzer plays up that quality.</span>
+      </div>
+      <div class="makeup-row">
+        <span class="makeup-category">Highlighter</span>
+        <span class="makeup-value">Gold or champagne — never silver or icy pink. A warm dewy finish suits you more than a blinding metallic.</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Section 9: Accessories -->
+  <div class="result-section">
+    <p class="result-section-label">09 — Accessories</p>
+    <h3>Metal, Stone, and Material</h3>
+
+    <div class="feature-grid">
+      <div class="feature-cell">
+        <p class="feature-cell-label">Metal</p>
+        <p class="feature-cell-value">Yellow gold, rose gold, warm brass, and burnished copper. Silver can work when it has warmth — white gold or platinum tend to look cold.</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Gemstones</p>
+        <p class="feature-cell-value">Warm topaz, citrine, amber, peridot, warm turquoise, and coral. Diamonds work when set in warm metals. Sapphires and amethysts can pull cool.</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Bags &amp; Shoes</p>
+        <p class="feature-cell-value">Warm tan, camel, cognac, warm taupe, and ivory. Avoid grey, true navy, and cool-toned black leathers — they visually disconnect from your coloring.</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Eyewear</p>
+        <p class="feature-cell-value">Warm tortoise, honey blonde acetate, warm gold frames, and light warm brown. Avoid stark black frames and cool grey metals near your face.</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Scarves &amp; Wraps</p>
+        <p class="feature-cell-value">Any palette color works beautifully as a scarf near the face — this is your best opportunity to experiment with bolder palette choices without committing to a full outfit.</p>
+      </div>
+      <div class="feature-cell">
+        <p class="feature-cell-label">Fabric Texture</p>
+        <p class="feature-cell-value">Soft, natural textures suit you — linen, cotton, light wool, silk. Heavy structured fabrics in dark colors can overwhelm your lightness. Stay in light-to-medium weights.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Section 10: Sister Seasons -->
+  <div class="result-section">
+    <p class="result-section-label">10 — Neighboring Seasons</p>
+    <h3>Your Color Family</h3>
+    <p>Light Spring shares characteristics with two neighboring seasons. Understanding the overlap helps when you encounter colors that feel close but don't quite land.</p>
+
+    <div class="sisters-grid">
+      <div class="sister-card">
+        <p class="sister-name">True Spring</p>
+        <p class="sister-relation">Sister Season — same family</p>
+        <p class="sister-desc">True Spring shares your warmth but can carry slightly more saturation and a touch more depth. If a color looks right but a shade too vivid for you, it likely belongs to True Spring. You can borrow from True Spring as long as you keep the value light.</p>
+      </div>
+      <div class="sister-card">
+        <p class="sister-name">Light Summer</p>
+        <p class="sister-relation">Neighboring Season — shared value</p>
+        <p class="sister-desc">Light Summer shares your lightness but leans slightly cooler and softer. Colors at the overlap point — powder blue, soft pink, light lavender — can work for both. If something feels almost right but faintly cool, it may be a Light Summer color wandering into your territory.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 24px;">If you ever feel uncertain between Light Spring and True Spring, the tell is clarity: True Spring can handle more vivid, saturated color. If a color is vivid and feels too strong, step toward Light Spring. If a color feels warm and right but slightly muted, consider that it may be crossing toward Light Summer — and can still work for you if the warmth is there.</p>
+  </div>
+
+
+  <!-- Section 11: Shopping Guidance -->
+  <div class="result-section">
+    <p class="result-section-label">11 — Shopping With Your Season</p>
+    <h3>How to Use This in Real Life</h3>
+    <p>A color analysis is most valuable when it changes how you make decisions, not when it creates rules that paralyze you. Here's how to put this to work practically.</p>
+    <p><strong style="font-weight:400;">The 3-second test:</strong> When you pick something up, ask — is this warm or cool? Is it light or dark? Clear or muted? If the answer matches your coloring (warm, light, clear), it's worth trying. If it fights all three, put it back.</p>
+    <p><strong style="font-weight:400;">Near the face:</strong> This is where your palette matters most. A navy blazer at the waist is far less impactful than a navy turtleneck. Prioritize your palette for necklines, scarves, earrings, and frames.</p>
+    <p><strong style="font-weight:400;">Occasion exceptions:</strong> A black dress for a formal event is fine. Your coloring won't collapse. The goal is to stock your everyday wardrobe with colors that make getting dressed easier and better — not to create anxiety over every purchase.</p>
+    <p><strong style="font-weight:400;">When in doubt, test with a scarf:</strong> Drape a color near your face in a mirror, ideally in natural light. If your skin looks clearer and your eyes brighter, it's in your zone. If you look tired, the color is competing.</p>
+  </div>
+
+
+  <!-- Result CTAs -->
+  <div class="result-cta-section">
+    <h3>Ready to shop your season?</h3>
+    <p>Explore curated picks for Light Spring, or read more about what makes the Spring family unique.</p>
+    <div class="cta-buttons">
+      <a href="https://goldenhue.shop/shop?season=light-spring" class="btn-primary btn-gold">Shop Light Spring Picks</a>
+      <a href="/blog.html" class="btn-outline">Read the Blog</a>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer class="footer" id="waitlist">
+  <div class="footer-color-band">
+    <div style="background:#F9E4D4;"></div>
+    <div style="background:#F5C4A0;"></div>
+    <div style="background:#F0A878;"></div>
+    <div style="background:#F07050;"></div>
+    <div style="background:#E8602A;"></div>
+    <div style="background:#D45040;"></div>
+    <div style="background:#C03A10;"></div>
+    <div style="background:#B0D888;"></div>
+    <div style="background:#80C8E0;"></div>
+    <div style="background:#5BAED4;"></div>
+    <div style="background:#3d7abf;"></div>
+    <div style="background:#9c1850;"></div>
+  </div>
+  <div class="footer-top">
+    <div>
+      <h2 class="footer-headline">Discover your season.</h2>
+      <p class="footer-sub">Color analysis, simplified. Know what to buy, what to skip, and why it works — delivered instantly.</p>
+    </div>
+    <div>
+      <form class="footer-form" name="footer-waitlist" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="footer-waitlist" />
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Notify Me</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a class="footer-wordmark" href="https://goldenhue.shop">GOLDEN<span class="pop">HUE</span></a>
+    <span>© 2025 Goldenhue. All rights reserved.</span>
+  </div>
+</footer>
+
+
+<script>
+  // ── STATE MANAGEMENT ──
+  const states = ['intro', 'upload', 'loading', 'result'];
+  const progressMap = { intro: '25%', upload: '50%', loading: '75%', result: '100%' };
+  const labelMap = {
+    intro: 'Step 1 of 2 — Before You Upload',
+    upload: 'Step 2 of 2 — Upload Your Photos',
+    loading: 'Analyzing...',
+    result: 'Your Results'
+  };
+
+  function showState(name) {
+    states.forEach(s => {
+      document.getElementById('state-' + s).classList.remove('active');
+    });
+    document.getElementById('state-' + name).classList.add('active');
+    document.getElementById('progress-fill').style.width = progressMap[name];
+    document.getElementById('step-label').textContent = labelMap[name];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (name === 'loading') {
+      startLoadingCycle();
+    }
+  }
+
+  function goToUpload() {
+    showState('upload');
+  }
+
+  // ── FILE HANDLING ──
+  const fileData = { 1: null, 2: null, 3: null };
+
+  function triggerFileInput(slot) {
+    document.getElementById('file-input-' + slot).click();
+  }
+
+  function handleDragOver(e, slot) {
+    e.preventDefault();
+    document.getElementById('slot-' + slot).classList.add('dragover');
+  }
+
+  function handleDragLeave(e, slot) {
+    document.getElementById('slot-' + slot).classList.remove('dragover');
+  }
+
+  function handleDrop(e, slot) {
+    e.preventDefault();
+    document.getElementById('slot-' + slot).classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file, slot);
+  }
+
+  function handleFileSelect(e, slot) {
+    const file = e.target.files[0];
+    if (file) processFile(file, slot);
+  }
+
+  function processFile(file, slot) {
+    if (!file.type.startsWith('image/')) {
+      showSlotError(slot, 'That file doesn\'t appear to be an image. Please choose a JPG, PNG, or HEIC file.');
+      return;
+    }
+
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = function() {
+      validateImage(img, slot, url, file);
+    };
+    img.src = url;
+  }
+
+  function validateImage(img, slot, url, file) {
+    // Size check
+    if (img.naturalWidth < 400 || img.naturalHeight < 400) {
+      showSlotError(slot, 'This photo is quite small (' + img.naturalWidth + '×' + img.naturalHeight + 'px). For accurate results, we need at least 400×400 pixels. Try a photo taken with your phone camera.');
+      return;
+    }
+
+    // Orientation check
+    if (img.naturalWidth > img.naturalHeight * 1.5) {
+      showSlotError(slot, 'This looks like a landscape-oriented photo. Portrait orientation (taller than wide) works best — it keeps your face and shoulders in frame together.');
+      return;
+    }
+
+    // Canvas brightness check
+    const canvas = document.createElement('canvas');
+    const size = 100;
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, size, size);
+    const data = ctx.getImageData(0, 0, size, size).data;
+
+    let totalBrightness = 0;
+    const pixelCount = size * size;
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i], g = data[i+1], b = data[i+2];
+      totalBrightness += (r * 0.299 + g * 0.587 + b * 0.114);
+    }
+    const avgBrightness = totalBrightness / pixelCount;
+
+    if (avgBrightness < 40) {
+      showSlotError(slot, 'This photo looks quite dark — average brightness is very low. Natural daylight photos work best. Try moving closer to a window or stepping outside.');
+      return;
+    }
+
+    if (avgBrightness > 230) {
+      showSlotError(slot, 'This photo looks overexposed. Direct sunlight or bright flash can wash out the skin tone details we need. Try a spot with bright but indirect natural light.');
+      return;
+    }
+
+    // All good
+    clearSlotError(slot);
+    fileData[slot] = file;
+    setSlotReady(slot, url);
+    checkAnalyzeButton();
+  }
+
+  function showSlotError(slot, msg) {
+    const errorEl = document.getElementById('error-' + slot);
+    errorEl.textContent = msg;
+    errorEl.classList.add('visible');
+    const statusEl = document.getElementById('status-' + slot);
+    statusEl.textContent = 'Issue';
+    statusEl.className = 'slot-status error';
+  }
+
+  function clearSlotError(slot) {
+    const errorEl = document.getElementById('error-' + slot);
+    errorEl.textContent = '';
+    errorEl.classList.remove('visible');
+  }
+
+  function setSlotReady(slot, url) {
+    const imgEl = document.getElementById('preview-img-' + slot);
+    imgEl.src = url;
+    imgEl.classList.add('loaded');
+    const statusEl = document.getElementById('status-' + slot);
+    statusEl.textContent = 'Ready ✓';
+    statusEl.className = 'slot-status ready';
+  }
+
+  function checkAnalyzeButton() {
+    const btn = document.getElementById('analyze-btn');
+    if (fileData[1]) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+    }
+  }
+
+  // ── LOADING & ANALYSIS ──
+  const loadingMessages = [
+    'Reading your undertones…',
+    'Mapping your season…',
+    'Identifying your best neutrals…',
+    'Checking your value range…',
+    'Almost there…'
+  ];
+  let loadingInterval = null;
+  let loadingIndex = 0;
+
+  function startLoadingCycle() {
+    const el = document.getElementById('loading-text');
+    loadingIndex = 0;
+    el.textContent = loadingMessages[0];
+    el.classList.add('visible');
+
+    loadingInterval = setInterval(() => {
+      el.classList.remove('visible');
+      setTimeout(() => {
+        loadingIndex = (loadingIndex + 1) % loadingMessages.length;
+        el.textContent = loadingMessages[loadingIndex];
+        el.classList.add('visible');
+      }, 600);
+    }, 2800);
+  }
+
+  function startAnalysis() {
+    if (!fileData[1]) return;
+    showState('loading');
+
+    // Simulate analysis time, then show result
+    setTimeout(() => {
+      if (loadingInterval) clearInterval(loadingInterval);
+      showState('result');
+    }, 5200);
+  }
+</script>
+
+</body>
+</html>

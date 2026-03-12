@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Analysis — Find Your Season | Goldenhue</title>
+  <meta name="description" content="A professional color analysis for $24.99. Upload a photo, get your season, your full palette, and a detailed guide to your best colors — instantly." />
+  <link rel="canonical" href="https://goldenhue.shop/color-analysis" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7KBD9Z8M2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E7KBD9Z8M2');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Josefin+Sans:wght@200;300;400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper:    #f7f3ed;
+      --ink:      #141210;
+      --warm-mid: #7a7268;
+      --rule:     #e0d8ce;
+      --white:    #fefcf9;
+      --spring:   #e8602a;
+      --summer:   #3d7abf;
+      --autumn:   #c03a10;
+      --winter:   #9c1850;
+      --ls-gold:  #f2c882;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(247,243,237,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+      padding: 0 40px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; font-size: 1rem; letter-spacing: 8px;
+      color: var(--ink); text-decoration: none; text-transform: uppercase;
+    }
+    .wordmark .pop { color: var(--spring); }
+    nav .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    nav .nav-links a {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--warm-mid);
+      text-decoration: none; transition: color 0.15s;
+    }
+    nav .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase;
+      background: var(--ink); color: var(--paper);
+      text-decoration: none; padding: 9px 18px; border-radius: 2px; transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.82; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      padding: 88px 40px 80px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--spring); margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.1;
+      color: var(--ink); margin-bottom: 24px; letter-spacing: -0.5px;
+    }
+    .hero h1 em { font-style: italic; color: var(--spring); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--warm-mid); line-height: 1.8;
+      max-width: 560px; margin: 0 auto 40px;
+    }
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      background: var(--ink); color: var(--paper);
+      text-decoration: none; padding: 17px 40px;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--spring); }
+    .cta-btn.spring { background: var(--spring); }
+    .cta-btn.spring:hover { background: var(--ink); }
+    .hero-note {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--warm-mid); margin-top: 18px;
+    }
+
+    /* ── SAMPLE CARD SECTION ── */
+    .sample-section {
+      padding: 88px 40px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-eyebrow {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--warm-mid); text-align: center; margin-bottom: 48px;
+    }
+
+    .sample-card {
+      max-width: 780px; margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      box-shadow: 0 4px 32px rgba(20,18,16,0.09), 0 1px 4px rgba(20,18,16,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .sample-card::before {
+      content: '';
+      display: block; height: 5px;
+      background: linear-gradient(90deg,
+        #f2c882 0%, #f5e070 12%, #f09068 24%,
+        #90d8a8 36%, #80c8e0 48%, #a0a8e8 60%,
+        #c8a050 72%, #f0a8b8 84%, #1e3888 100%
+      );
+    }
+    .sample-badge {
+      position: absolute; top: 20px; right: 20px;
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--warm-mid); border: 1px solid var(--rule);
+      padding: 4px 10px;
+    }
+    .sample-card-inner { padding: 44px 48px 40px; }
+
+    .sample-report-label {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--warm-mid); margin-bottom: 28px;
+    }
+
+    .sample-season-name {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2.4rem, 5vw, 3.6rem); color: var(--ink);
+      letter-spacing: -0.5px; line-height: 1; margin-bottom: 6px;
+    }
+    .sample-season-meta {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--ls-gold); margin-bottom: 22px;
+    }
+    .sample-divider { border: none; border-top: 1px solid var(--rule); margin: 22px 0; }
+
+    .sample-description {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-weight: 300; font-size: 1.2rem; line-height: 1.55;
+      color: var(--ink); max-width: 520px; margin-bottom: 32px;
+    }
+
+    .sample-palette-label {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--warm-mid); margin-bottom: 14px;
+    }
+    .sample-swatches {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .sample-swatch {
+      width: 44px; height: 44px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .sample-meta-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px; padding-top: 24px; border-top: 1px solid var(--rule);
+    }
+    .sample-meta-item {}
+    .sample-meta-label {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--ls-gold); margin-bottom: 8px;
+    }
+    .sample-meta-value {
+      font-size: 0.88rem; color: var(--ink); line-height: 1.5;
+    }
+    .sample-sections-note {
+      margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .sample-sections-note span {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--warm-mid);
+    }
+    .sample-sections-list { display: flex; gap: 12px; flex-wrap: wrap; }
+    .sample-section-pill {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--warm-mid); border: 1px solid var(--rule);
+      padding: 3px 9px;
+    }
+
+    /* ── DELIVERABLES ── */
+    .deliverables-section {
+      padding: 88px 40px;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+    }
+    .deliverables-inner { max-width: 900px; margin: 0 auto; }
+    .deliverables-section h2 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--ink);
+      margin-bottom: 8px; text-align: center; letter-spacing: -0.3px;
+    }
+    .deliverables-sub {
+      text-align: center; color: var(--warm-mid); font-size: 1rem;
+      margin-bottom: 56px;
+    }
+    .deliverables-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+    .deliverable {
+      padding: 28px 32px;
+      border-bottom: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .deliverable:nth-child(even) { border-right: none; }
+    .deliverable:nth-last-child(-n+2) { border-bottom: none; }
+    .deliverable-num {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: 1.5rem; color: var(--ls-gold); line-height: 1;
+      flex-shrink: 0; width: 28px;
+    }
+    .deliverable-text h3 {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--ink); margin-bottom: 5px;
+    }
+    .deliverable-text p { font-size: 0.88rem; color: var(--warm-mid); line-height: 1.6; }
+
+    /* ── TRUST PILLARS ── */
+    .trust-section {
+      padding: 72px 40px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .trust-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 0; border: 1px solid var(--rule);
+    }
+    .trust-pillar {
+      padding: 40px 36px;
+      border-right: 1px solid var(--rule);
+      text-align: center;
+    }
+    .trust-pillar:last-child { border-right: none; }
+    .trust-icon {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: 2rem; color: var(--ls-gold); margin-bottom: 12px;
+      display: block;
+    }
+    .trust-pillar h3 {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--ink); margin-bottom: 10px;
+    }
+    .trust-pillar p { font-size: 0.88rem; color: var(--warm-mid); line-height: 1.65; }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      padding: 96px 40px;
+      background: var(--ink);
+      text-align: center;
+    }
+    .final-cta-eyebrow {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ls-gold); margin-bottom: 28px;
+    }
+    .final-cta h2 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.4rem); color: var(--white);
+      margin-bottom: 16px; line-height: 1.15; letter-spacing: -0.3px;
+    }
+    .final-cta h2 em { font-style: italic; color: var(--ls-gold); }
+    .final-cta p { font-size: 1rem; color: rgba(250,240,224,0.55); margin-bottom: 40px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--paper);
+      border-top: 1px solid var(--rule);
+    }
+    .footer-color-band { display: flex; height: 6px; }
+    .footer-color-band div { flex: 1; }
+    .footer-top {
+      max-width: 1100px; margin: 0 auto;
+      padding: 64px 40px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+    }
+    .footer-headline {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; color: var(--ink);
+    }
+    .footer-headline em { font-style: italic; }
+    .footer-right-col { display: flex; flex-direction: column; gap: 24px; }
+    .footer-right-text { font-size: 1rem; color: var(--warm-mid); line-height: 1.7; }
+    .footer-waitlist-form { display: flex; gap: 10px; flex-wrap: wrap; }
+    .footer-waitlist-form input[type="email"] {
+      flex: 1; min-width: 180px; padding: 11px 14px;
+      border: 1px solid var(--rule); background: var(--paper);
+      color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300;
+      font-size: 0.88rem; border-radius: 2px; outline: none; transition: border-color 0.15s;
+    }
+    .footer-waitlist-form input[type="email"]:focus { border-color: var(--ink); }
+    .footer-waitlist-form input[type="email"]::placeholder { color: var(--warm-mid); }
+    .footer-waitlist-form button {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 11px 20px; background: var(--ink); color: var(--paper);
+      border: none; cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
+    }
+    .footer-waitlist-form button:hover { opacity: 0.82; }
+    .footer-bottom {
+      max-width: 1100px; margin: 0 auto; padding: 24px 40px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--rule); gap: 16px; flex-wrap: wrap;
+    }
+    .footer-wordmark {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: 1rem; letter-spacing: 8px; text-transform: uppercase; color: var(--ink);
+    }
+    .footer-wordmark .pop { color: var(--spring); }
+    .footer-note {
+      font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 9px;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--warm-mid);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      nav .nav-links { display: none; }
+      .hero { padding: 64px 24px 56px; }
+      .sample-section { padding: 64px 24px; }
+      .sample-card-inner { padding: 32px 28px; }
+      .sample-meta-row { grid-template-columns: 1fr; gap: 20px; }
+      .deliverables-section { padding: 64px 24px; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .deliverable:nth-child(even) { border-right: 1px solid var(--rule); }
+      .deliverable:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
+      .deliverable:last-child { border-bottom: none; }
+      .trust-section { padding: 64px 24px; }
+      .trust-inner { grid-template-columns: 1fr; }
+      .trust-pillar { border-right: none; border-bottom: 1px solid var(--rule); }
+      .trust-pillar:last-child { border-bottom: none; }
+      .final-cta { padding: 72px 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; padding: 40px 24px 32px; }
+      .footer-bottom { padding: 20px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="wordmark" href="https://goldenhue.shop">GOLDEN<span class="pop">HUE</span></a>
+  <ul class="nav-links">
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/what-is-color-analysis.html">Color Analysis</a></li>
+    <li><a href="https://goldenhue.shop/shop">Shop by Season</a></li>
+  </ul>
+  <a href="/color-analysis-upload.html" class="nav-cta">Get My Analysis</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Color Analysis · $24.99</div>
+  <h1>Your most flattering colors<br>have a <em>name.</em></h1>
+  <p class="hero-sub">Color analysis identifies your season — the family of colors that naturally harmonizes with your skin tone, hair, and eyes. Once you know it, you'll shop differently. Every piece will look right.</p>
+  <a href="/color-analysis-upload.html" class="cta-btn spring">Get My Color Analysis — $24.99</a>
+  <div class="hero-note">Instant results &nbsp;·&nbsp; No subscription &nbsp;·&nbsp; One upload</div>
+</section>
+
+<!-- SAMPLE RESULT CARD -->
+<section class="sample-section">
+  <div class="section-eyebrow">What Your Report Looks Like</div>
+
+  <div class="sample-card">
+    <div class="sample-badge">Sample Report</div>
+
+    <div class="sample-card-inner">
+      <div class="sample-report-label">Goldenhue Color Analysis Report</div>
+
+      <div class="sample-season-name">Light Spring</div>
+      <div class="sample-season-meta">Spring Family &nbsp;·&nbsp; Warm-Neutral Undertone</div>
+
+      <hr class="sample-divider">
+
+      <p class="sample-description">"Light, warm, and bright — your coloring has a natural freshness that lighter, clearer colors bring forward beautifully. You're not pale, you're luminous — and the right colors make all the difference."</p>
+
+      <div class="sample-palette-label">Your Palette — 26 Colors</div>
+      <div class="sample-swatches">
+        <div class="sample-swatch" style="background:#FAF0E0"></div>
+        <div class="sample-swatch" style="background:#F5E070"></div>
+        <div class="sample-swatch" style="background:#C8A050"></div>
+        <div class="sample-swatch" style="background:#F5C4A0"></div>
+        <div class="sample-swatch" style="background:#F07050"></div>
+        <div class="sample-swatch" style="background:#F06068"></div>
+        <div class="sample-swatch" style="background:#F0A8B8"></div>
+        <div class="sample-swatch" style="background:#80C8E0"></div>
+        <div class="sample-swatch" style="background:#A0A8E8"></div>
+        <div class="sample-swatch" style="background:#B0D888"></div>
+        <div class="sample-swatch" style="background:#1E3888"></div>
+        <div class="sample-swatch" style="background:#C8B0D8" style="opacity:0.4"></div>
+        <div class="sample-swatch" style="background:#6060a0;opacity:0.25;border:1px dashed var(--rule)"></div>
+        <div class="sample-swatch" style="background:#6060a0;opacity:0.15;border:1px dashed var(--rule)"></div>
+        <div class="sample-swatch" style="background:#6060a0;opacity:0.10;border:1px dashed var(--rule)"></div>
+      </div>
+      <div style="font-family:'Josefin Sans',sans-serif;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--warm-mid);margin-top:-16px;margin-bottom:24px;">+ 11 more colors in your full report</div>
+
+      <div class="sample-meta-row">
+        <div class="sample-meta-item">
+          <div class="sample-meta-label">Dominant Trait</div>
+          <div class="sample-meta-value">Lightness — soft and airy overall coloring. Colors mixed with white, not gray, always work best.</div>
+        </div>
+        <div class="sample-meta-item">
+          <div class="sample-meta-label">Best Neutrals</div>
+          <div class="sample-meta-value">Warm Ivory<br>Camel<br>Warm Tan<br>Bright Navy</div>
+        </div>
+        <div class="sample-meta-item">
+          <div class="sample-meta-label">Sister Season</div>
+          <div class="sample-meta-value">Light Summer — shares the lightness trait; many of those colors will suit you too.</div>
+        </div>
+      </div>
+
+      <div class="sample-sections-note">
+        <span>Also included in your report</span>
+        <div class="sample-sections-list">
+          <span class="sample-section-pill">Colors to Avoid</span>
+          <span class="sample-section-pill">Hair Guidance</span>
+          <span class="sample-section-pill">Makeup</span>
+          <span class="sample-section-pill">Accessories</span>
+          <span class="sample-section-pill">Patterns</span>
+          <span class="sample-section-pill">Choose X Over Y</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU RECEIVE -->
+<section class="deliverables-section">
+  <div class="deliverables-inner">
+    <h2>Everything in your report</h2>
+    <p class="deliverables-sub">Eleven sections. Specific enough to shop from the day you receive it.</p>
+
+    <div class="deliverables-grid">
+      <div class="deliverable">
+        <div class="deliverable-num">01</div>
+        <div class="deliverable-text">
+          <h3>Your Season</h3>
+          <p>Your season name, family, and a plain-language description of what defines your coloring and why it matters.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">02</div>
+        <div class="deliverable-text">
+          <h3>Full Color Palette</h3>
+          <p>A complete grid of 26+ colors — your best shades from neutrals to accents, shown as swatches you can match in stores.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">03</div>
+        <div class="deliverable-text">
+          <h3>Colors to Avoid</h3>
+          <p>The specific colors that work against your natural coloring — and a clear explanation of why each one doesn't serve you.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">04</div>
+        <div class="deliverable-text">
+          <h3>Your Natural Features</h3>
+          <p>Your dominant trait and undertone explained in plain language — so you understand the logic, not just the rules.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">05</div>
+        <div class="deliverable-text">
+          <h3>Best Neutrals</h3>
+          <p>The four anchor colors that should form the foundation of your wardrobe, shown with names for easy shopping.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">06</div>
+        <div class="deliverable-text">
+          <h3>Choose This Over That</h3>
+          <p>Ten practical shopping comparisons — flamingo over berry, camel over gray — to train your eye at the rack.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">07</div>
+        <div class="deliverable-text">
+          <h3>Pattern Guidance</h3>
+          <p>Which prints and patterns suit your season — and which contrast levels, scale, and motifs to seek or avoid.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">08</div>
+        <div class="deliverable-text">
+          <h3>Hair Guidance</h3>
+          <p>Whether your natural hair serves you well, and what tones to look for (or avoid) if you colour it.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">09</div>
+        <div class="deliverable-text">
+          <h3>Makeup</h3>
+          <p>Specific eyeshadow tones, blush shades, and lip colors that harmonize with your season — not just generic "nudes."</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">10</div>
+        <div class="deliverable-text">
+          <h3>Accessories</h3>
+          <p>Metal tone guidance and which palette colors translate best to glasses, scarves, bags, and jewelry.</p>
+        </div>
+      </div>
+      <div class="deliverable">
+        <div class="deliverable-num">11</div>
+        <div class="deliverable-text">
+          <h3>Sister &amp; Neighboring Seasons</h3>
+          <p>The adjacent seasons you share traits with — useful when shopping and browsing guides for related palettes.</p>
+        </div>
+      </div>
+      <div class="deliverable" style="background:var(--paper);align-items:center;justify-content:center;text-align:center;flex-direction:column;gap:8px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;color:var(--ls-gold);">$24.99</div>
+        <div style="font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm-mid);">One-time · Instant delivery</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST PILLARS -->
+<section class="trust-section">
+  <div class="trust-inner">
+    <div class="trust-pillar">
+      <span class="trust-icon">◎</span>
+      <h3>Instant Results</h3>
+      <p>Your report is generated the moment you upload your photo. No waiting, no back-and-forth. You'll have your season and your full palette within seconds.</p>
+    </div>
+    <div class="trust-pillar">
+      <span class="trust-icon">◈</span>
+      <h3>Trained on Color Theory</h3>
+      <p>This isn't a questionnaire. Our AI analyses the actual colors in your photo — undertone, depth, and clarity — the same way a trained analyst would.</p>
+    </div>
+    <div class="trust-pillar">
+      <span class="trust-icon">◇</span>
+      <h3>Detailed Enough to Shop</h3>
+      <p>Eleven sections. Named swatches. The "choose X over Y" list you can take to the store. Everything you need to make every purchase count.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-eyebrow">Ready?</div>
+  <h2>Find out which colors<br>were made <em>for you.</em></h2>
+  <p>One photo. Instant results. $24.99.</p>
+  <a href="/color-analysis-upload.html" class="cta-btn" style="background:var(--ls-gold);color:var(--ink);">Get My Color Analysis — $24.99</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-color-band">
+    <div style="background:#f2c882"></div>
+    <div style="background:#e8602a"></div>
+    <div style="background:#f5c518"></div>
+    <div style="background:#8ec8d8"></div>
+    <div style="background:#5a88c0"></div>
+    <div style="background:#c080b0"></div>
+    <div style="background:#d46828"></div>
+    <div style="background:#b83810"></div>
+    <div style="background:#783018"></div>
+    <div style="background:#1a58b0"></div>
+    <div style="background:#880030"></div>
+    <div style="background:#d80858"></div>
+  </div>
+  <div class="footer-top">
+    <div class="footer-headline">Dress for<br>your <em>season.</em></div>
+    <div class="footer-right-col">
+      <div class="footer-right-text">Goldenhue is a color season shopping platform launching soon. Get your analysis now and be ready to shop your season the moment we open.</div>
+      <form class="footer-waitlist-form" name="footer-waitlist" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="footer-waitlist" />
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Join Waitlist</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-wordmark">GOLDEN<span class="pop">HUE</span></div>
+    <div class="footer-note">© 2026 · Color Season Shopping · Coming Soon</div>
+  </div>
+</footer>
+
+</body>
+</html>
