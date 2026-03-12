@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Goldenhue — Brand V7</title>
+<title>Goldenhue — Shop Clothing by Your Color Season</title>
+<meta name="description" content="Goldenhue helps you shop by your color season — so every piece you buy is built for your exact palette. Find your season and stop buying clothes that don't work." />
+<link rel="canonical" href="https://goldenhue.shop/" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E7KBD9Z8M2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-E7KBD9Z8M2');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Josefin+Sans:wght@200;300;400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -320,13 +330,13 @@ nav {
 
 <!-- NAV -->
 <nav>
-  <div class="wordmark">GOLDEN<span class="pop">HUE</span></div>
+  <a class="wordmark" href="https://goldenhue.shop">GOLDEN<span class="pop">HUE</span></a>
   <ul class="nav-links">
-    <li><a href="#">Blog</a></li>
-    <li><a href="#">Color Analysis</a></li>
-    <li><a href="#">Shop by Season</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/what-is-color-analysis.html">Color Analysis</a></li>
+    <li><a href="https://goldenhue.shop/shop">Shop by Season</a></li>
   </ul>
-  <a href="#" class="nav-cta">Join Waitlist</a>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
 </nav>
 
 <!-- HERO -->
@@ -339,13 +349,14 @@ nav {
       <span class="warm">naturally.</span>
     </h1>
     <p class="hero-body">Your coloring has a season, and the colors in it will always look right on you. Find yours and shop with confidence. Get your color analysis for just $24.99.</p>
-    <div class="hero-form">
+    <form class="hero-form" id="hero-form" name="waitlist" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="waitlist" />
       <div class="hero-form-label">Join the waitlist</div>
       <div class="hero-input-row">
-        <input type="email" placeholder="your@email.com">
-        <button>Get Early Access</button>
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">Get Early Access</button>
       </div>
-    </div>
+    </form>
   </div>
 
   <!-- CAROUSEL -->
@@ -443,7 +454,7 @@ nav {
       <div class="split-big-text">Your perfect palette is already written into your coloring.</div>
     </div>
     <div class="split-body">Color analysis identifies which colors harmonize with your natural skin tone, hair, and eyes. Once you know your season, shopping gets a lot simpler.</div>
-    <a href="#" class="split-link">Learn how it works →</a>
+    <a href="/what-is-color-analysis.html" class="split-link">Learn how it works →</a>
   </div>
   <div class="split-right">
     <img src="https://images.unsplash.com/photo-1769708638741-172a56153eef?q=80&w=800&auto=format&fit=crop" alt="Fashion editorial">
@@ -457,7 +468,7 @@ nav {
 <section class="seasons-section">
   <div class="seasons-header">
     <div class="section-title">The <em>Seasons</em></div>
-    <a href="#" class="section-link">Take the Quiz →</a>
+    <a href="/what-is-color-analysis.html" class="section-link">Learn More →</a>
   </div>
   <div class="seasons-row">
     <div class="season-panel sp-spring">
@@ -499,7 +510,7 @@ nav {
 <section class="blog-section">
   <div class="blog-header">
     <div class="section-title">From the <em>Guide</em></div>
-    <a href="#" class="section-link">All Posts →</a>
+    <a href="/blog.html" class="section-link">All Posts →</a>
   </div>
   <div class="blog-featured">
     <div class="blog-featured-photo">
@@ -509,30 +520,30 @@ nav {
       <div class="blog-featured-tag tag-winter">Winter · 8 min read</div>
       <div class="blog-featured-title">The <em>True Winter</em><br>Color Palette</div>
       <div class="blog-featured-body">Cool, crisp, and high-contrast. True Winter is one of the most striking seasons — here's every color that makes it work, and exactly what to avoid.</div>
-      <a href="#" class="blog-featured-link">Read the Guide →</a>
+      <a href="/true-winter-color-palette.html" class="blog-featured-link">Read the Guide →</a>
     </div>
   </div>
   <div class="blog-list">
-    <div class="blog-list-item">
+    <a class="blog-list-item" href="/dark-autumn.html" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-list-tag tag-autumn">Autumn · 8 min</div>
       <div class="blog-list-title">The Dark Autumn Color Palette</div>
       <div class="blog-list-body">Earthy, rich, intense. The deepest and most dramatic of the Autumn seasons.</div>
-    </div>
-    <div class="blog-list-item">
+    </a>
+    <a class="blog-list-item" href="/light-summer.html" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-list-tag tag-summer">Summer · 8 min</div>
       <div class="blog-list-title">The Light Summer Color Palette</div>
       <div class="blog-list-body">Soft, cool, and airy. The most delicate and powdery season of all.</div>
-    </div>
-    <div class="blog-list-item">
+    </a>
+    <a class="blog-list-item" href="/what-is-color-analysis.html" style="text-decoration:none;color:inherit;display:block;">
       <div class="blog-list-tag tag-basics">Basics · 10 min</div>
       <div class="blog-list-title">What Is Color Analysis?</div>
       <div class="blog-list-body">Never heard of seasonal color analysis? This is the only guide you need.</div>
-    </div>
+    </a>
   </div>
 </section>
 
 <!-- FOOTER — light -->
-<footer class="footer">
+<footer class="footer" id="waitlist">
   <div class="footer-color-band">
     <div class="footer-color-seg" style="background:#f2c882;"></div>
     <div class="footer-color-seg" style="background:#e8602a;"></div>
@@ -551,10 +562,11 @@ nav {
     <div class="footer-headline">Dress for<br>your <em>season.</em></div>
     <div class="footer-right-col">
       <div class="footer-right-text">Goldenhue is a color season shopping platform launching soon. Join the waitlist to be first in line when we open.</div>
-      <div class="footer-waitlist-form">
-        <input type="email" placeholder="your@email.com">
-        <button>Notify Me</button>
-      </div>
+      <form class="footer-waitlist-form" name="footer-waitlist" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="footer-waitlist" />
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">Notify Me</button>
+      </form>
     </div>
   </div>
   <div class="footer-bottom">
