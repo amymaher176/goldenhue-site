@@ -31,7 +31,7 @@
       --summer: #3d7abf;
       --autumn: #c03a10;
       --winter: #9c1850;
-      --ls-gold: #f2c882;
+      --season-accent: #f2c882; /* updated dynamically per season */
     }
 
     html { scroll-behavior: smooth; }
@@ -104,14 +104,10 @@
     .state.active { display: block; }
 
     /* ── PROGRESS BAR ── */
-    .progress-bar {
-      height: 3px;
-      background: var(--rule);
-      position: relative;
-    }
+    .progress-bar { height: 3px; background: var(--rule); }
     .progress-fill {
       height: 100%;
-      background: var(--ls-gold);
+      background: var(--season-accent);
       transition: width 0.5s ease;
     }
 
@@ -125,6 +121,43 @@
       text-transform: uppercase;
       color: var(--warm-mid);
     }
+
+    /* ── SHARED BUTTONS ── */
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      padding: 18px 40px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-accent { background: var(--season-accent); color: var(--ink); }
+    .btn-outline {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 16px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--white); }
 
     /* ── INTRO STATE ── */
     #state-intro {
@@ -156,7 +189,6 @@
     .checklist {
       display: flex;
       flex-direction: column;
-      gap: 0;
       border-top: 1px solid var(--rule);
       margin-bottom: 48px;
     }
@@ -172,7 +204,7 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: var(--ls-gold);
+      background: var(--season-accent);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -194,28 +226,6 @@
       color: var(--warm-mid);
       line-height: 1.65;
     }
-    .btn-primary {
-      display: inline-block;
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 300;
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      background: var(--ink);
-      color: var(--white);
-      border: none;
-      padding: 18px 40px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: opacity 0.2s;
-      width: 100%;
-      text-align: center;
-    }
-    .btn-primary:hover { opacity: 0.8; }
-    .btn-gold {
-      background: var(--ls-gold);
-      color: var(--ink);
-    }
 
     /* ── UPLOAD STATE ── */
     #state-upload {
@@ -230,24 +240,15 @@
       line-height: 1.2;
       margin-bottom: 12px;
     }
-    #state-upload .upload-sub {
-      font-size: 15px;
-      color: var(--warm-mid);
-      margin-bottom: 40px;
-    }
-    .upload-slots {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 40px;
-    }
+    .upload-sub { font-size: 15px; color: var(--warm-mid); margin-bottom: 40px; }
+    .upload-slots { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
     .upload-slot {
       border: 1px solid var(--rule);
       background: var(--white);
       border-radius: 2px;
       transition: border-color 0.2s;
     }
-    .upload-slot.dragover { border-color: var(--ls-gold); background: #fdf8ee; }
+    .upload-slot.dragover { border-color: var(--season-accent); background: #fdf8ee; }
     .upload-slot-inner {
       display: flex;
       align-items: center;
@@ -268,16 +269,8 @@
       background: var(--paper);
       position: relative;
     }
-    .slot-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
-    .slot-preview .slot-icon {
-      position: absolute;
-      opacity: 0.3;
-    }
+    .slot-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .slot-preview .slot-icon { position: absolute; opacity: 0.3; }
     .slot-preview img.loaded { display: block; }
     .slot-preview img.loaded + .slot-icon { display: none; }
     .slot-info { flex: 1; }
@@ -289,11 +282,7 @@
       color: var(--ink);
       margin-bottom: 4px;
     }
-    .slot-desc {
-      font-size: 13px;
-      color: var(--warm-mid);
-      line-height: 1.5;
-    }
+    .slot-desc { font-size: 13px; color: var(--warm-mid); line-height: 1.5; }
     .slot-status {
       font-family: 'Josefin Sans', sans-serif;
       font-size: 9px;
@@ -333,7 +322,7 @@
       width: 64px;
       height: 64px;
       border: 2px solid var(--rule);
-      border-top-color: var(--ls-gold);
+      border-top-color: var(--season-accent);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin-bottom: 40px;
@@ -351,11 +340,55 @@
       min-height: 40px;
     }
     .loading-text.visible { opacity: 1; }
-    .loading-note {
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--warm-mid);
+    .loading-note { margin-top: 24px; font-size: 13px; color: var(--warm-mid); text-align: center; }
+
+    /* ── ERROR STATE ── */
+    #state-error {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 80px 24px;
       text-align: center;
+    }
+    #state-error h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 16px;
+    }
+    #state-error p {
+      font-size: 15px;
+      color: var(--warm-mid);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .error-tips {
+      text-align: left;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 28px;
+      margin: 24px 0 32px;
+    }
+    .error-tips h3 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      margin-bottom: 14px;
+    }
+    .error-tips li {
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      list-style: none;
+      padding-left: 16px;
+      position: relative;
+    }
+    .error-tips li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--season-accent);
     }
 
     /* ── RESULT STATE ── */
@@ -379,10 +412,10 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--warm-mid);
-      background: #fdf5e6;
-      border: 1px solid var(--ls-gold);
+      border: 1px solid var(--season-accent);
       padding: 6px 18px;
       margin-bottom: 24px;
+      background: color-mix(in srgb, var(--season-accent) 10%, var(--white));
     }
     .result-season-name {
       font-family: 'Cormorant Garamond', serif;
@@ -390,14 +423,13 @@
       font-size: clamp(44px, 8vw, 80px);
       line-height: 1;
       margin-bottom: 8px;
-      color: var(--ink);
     }
     .result-season-family {
       font-family: 'Josefin Sans', sans-serif;
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--ls-gold);
+      color: var(--season-accent);
       margin-bottom: 28px;
     }
     .result-quote {
@@ -406,15 +438,27 @@
       font-size: clamp(18px, 3vw, 24px);
       color: var(--warm-mid);
       max-width: 520px;
-      margin: 0 auto 28px;
+      margin: 0 auto 20px;
       line-height: 1.6;
     }
-    .result-description {
-      font-size: 15px;
+    .result-mantra {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--season-accent);
+      margin-bottom: 24px;
+    }
+    .result-confidence {
+      display: inline-block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       color: var(--warm-mid);
-      max-width: 560px;
-      margin: 0 auto;
-      line-height: 1.75;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 5px 14px;
     }
 
     /* result section */
@@ -423,15 +467,13 @@
       padding-bottom: 56px;
       border-bottom: 1px solid var(--rule);
     }
-    .result-section:last-child {
-      border-bottom: none;
-    }
+    .result-section:last-of-type { border-bottom: none; }
     .result-section-label {
       font-family: 'Josefin Sans', sans-serif;
       font-size: 9px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--ls-gold);
+      color: var(--season-accent);
       margin-bottom: 8px;
     }
     .result-section h3 {
@@ -451,8 +493,8 @@
     /* palette */
     .palette-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+      gap: 12px;
       margin-top: 24px;
     }
     .palette-swatch {
@@ -465,7 +507,8 @@
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.07);
+      flex-shrink: 0;
     }
     .swatch-name {
       font-family: 'Josefin Sans', sans-serif;
@@ -476,24 +519,22 @@
       text-align: center;
       line-height: 1.3;
     }
-
-    /* avoid palette */
-    .avoid-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-      gap: 10px;
-      margin-top: 24px;
-    }
     .avoid-swatch .swatch-circle {
+      opacity: 0.65;
       position: relative;
-      opacity: 0.7;
     }
-    .avoid-swatch .swatch-circle::after {
-      content: '';
+    /* X overlay for avoid swatches */
+    .avoid-swatch { position: relative; }
+    .avoid-swatch::after {
+      content: '×';
       position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 2px solid rgba(200,60,40,0.35);
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 22px;
+      color: rgba(180,50,30,0.5);
+      line-height: 1;
+      pointer-events: none;
     }
 
     /* feature grid */
@@ -505,29 +546,19 @@
       border: 1px solid var(--rule);
       margin-top: 24px;
     }
-    .feature-cell {
-      background: var(--white);
-      padding: 20px 24px;
-    }
+    .feature-cell { background: var(--white); padding: 20px 24px; }
     .feature-cell-label {
       font-family: 'Josefin Sans', sans-serif;
       font-size: 9px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--ls-gold);
+      color: var(--season-accent);
       margin-bottom: 6px;
     }
-    .feature-cell-value {
-      font-size: 15px;
-      font-weight: 300;
-      color: var(--ink);
-    }
+    .feature-cell-value { font-size: 15px; font-weight: 300; color: var(--ink); }
 
     /* choose x over y */
     .pairs-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
       border-top: 1px solid var(--rule);
       margin-top: 24px;
     }
@@ -540,21 +571,9 @@
       border-bottom: 1px solid var(--rule);
       font-size: 14px;
     }
-    .pair-yes {
-      color: var(--ink);
-      font-weight: 300;
-    }
-    .pair-no {
-      color: var(--warm-mid);
-      text-decoration: line-through;
-      text-align: right;
-    }
-    .pair-arrow {
-      font-family: 'Josefin Sans', sans-serif;
-      font-size: 14px;
-      color: var(--ls-gold);
-      text-align: center;
-    }
+    .pair-yes { color: var(--ink); }
+    .pair-no { color: var(--warm-mid); text-decoration: line-through; text-align: right; }
+    .pair-arrow { font-size: 14px; color: var(--season-accent); text-align: center; }
 
     /* neutrals */
     .neutrals-grid {
@@ -570,14 +589,13 @@
       padding: 16px 20px;
       background: var(--white);
       border: 1px solid var(--rule);
-      border-radius: 2px;
     }
     .neutral-swatch {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       flex-shrink: 0;
-      border: 1px solid rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.07);
     }
     .neutral-name {
       font-family: 'Josefin Sans', sans-serif;
@@ -586,63 +604,7 @@
       text-transform: uppercase;
       margin-bottom: 3px;
     }
-    .neutral-desc {
-      font-size: 12px;
-      color: var(--warm-mid);
-    }
-
-    /* patterns */
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 20px;
-    }
-    .tag {
-      font-family: 'Josefin Sans', sans-serif;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 7px 14px;
-      border: 1px solid var(--rule);
-      color: var(--warm-mid);
-      background: var(--white);
-    }
-    .tag.highlight {
-      border-color: var(--ls-gold);
-      color: var(--ink);
-      background: #fdf8ee;
-    }
-
-    /* makeup rows */
-    .makeup-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid var(--rule);
-      margin-top: 24px;
-    }
-    .makeup-row {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 20px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--rule);
-      font-size: 14px;
-    }
-    .makeup-category {
-      font-family: 'Josefin Sans', sans-serif;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ls-gold);
-      padding-top: 2px;
-    }
-    .makeup-value {
-      color: var(--ink);
-      font-weight: 300;
-      line-height: 1.6;
-    }
+    .neutral-desc { font-size: 12px; color: var(--warm-mid); }
 
     /* sister seasons */
     .sisters-grid {
@@ -655,7 +617,6 @@
       padding: 24px;
       background: var(--white);
       border: 1px solid var(--rule);
-      border-radius: 2px;
     }
     .sister-name {
       font-family: 'Cormorant Garamond', serif;
@@ -668,68 +629,25 @@
       font-size: 9px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--ls-gold);
+      color: var(--season-accent);
       margin-bottom: 10px;
     }
-    .sister-desc {
-      font-size: 13px;
-      color: var(--warm-mid);
-      line-height: 1.65;
-    }
+    .sister-desc { font-size: 13px; color: var(--warm-mid); line-height: 1.65; }
 
-    /* result CTAs */
-    .result-cta-section {
-      text-align: center;
-      padding: 56px 0 0;
-      border-top: 1px solid var(--rule);
-    }
-    .result-cta-section h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(24px, 4vw, 36px);
-      margin-bottom: 12px;
-    }
-    .result-cta-section p {
-      font-size: 15px;
-      color: var(--warm-mid);
-      margin-bottom: 32px;
-    }
-    .cta-buttons {
+    /* result actions */
+    .result-actions {
       display: flex;
       gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
-    }
-    .btn-outline {
-      display: inline-block;
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 300;
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      background: transparent;
-      color: var(--ink);
-      border: 1px solid var(--ink);
-      padding: 16px 32px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .btn-outline:hover {
-      background: var(--ink);
-      color: var(--white);
+      padding: 48px 0 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 56px;
     }
 
     /* ── FOOTER ── */
-    footer.footer {
-      margin-top: 80px;
-      border-top: 1px solid var(--rule);
-    }
-    .footer-color-band {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      height: 6px;
-    }
+    footer.footer { border-top: 1px solid var(--rule); }
+    .footer-color-band { display: grid; grid-template-columns: repeat(12, 1fr); height: 6px; }
     .footer-top {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -746,12 +664,8 @@
       color: var(--white);
       margin-bottom: 12px;
     }
-    .footer-sub {
-      font-size: 14px;
-      color: rgba(254,252,249,0.55);
-      line-height: 1.65;
-    }
-    .footer-form { display: flex; gap: 0; margin-top: 28px; }
+    .footer-sub { font-size: 14px; color: rgba(254,252,249,0.55); line-height: 1.65; }
+    .footer-form { display: flex; margin-top: 28px; }
     .footer-form input {
       flex: 1;
       padding: 13px 16px;
@@ -796,10 +710,18 @@
     }
     .footer-wordmark .pop { color: var(--spring); }
 
+    /* ── PRINT ── */
+    @media print {
+      nav, .progress-bar, .step-label, .result-actions, footer { display: none !important; }
+      body { background: white; }
+      #state-result { padding: 0 !important; }
+      .result-section { break-inside: avoid; }
+    }
+
     @media (max-width: 640px) {
       nav { padding: 0 20px; }
       ul.nav-links { display: none; }
-      #state-intro, #state-upload { padding: 40px 16px 60px; }
+      #state-intro, #state-upload, #state-error { padding: 40px 16px 60px; }
       #state-result { padding: 0 16px 60px; }
       .feature-grid { grid-template-columns: 1fr; }
       .neutrals-grid { grid-template-columns: 1fr; }
@@ -807,8 +729,8 @@
       .footer-top { grid-template-columns: 1fr; padding: 40px 24px 32px; gap: 32px; }
       .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
       .pair-row { grid-template-columns: 1fr 24px 1fr; }
-      .makeup-row { grid-template-columns: 1fr; gap: 4px; }
-      .cta-buttons { flex-direction: column; align-items: center; }
+      .result-actions { flex-direction: column; align-items: stretch; }
+      .btn-outline, .btn-primary { text-align: center; }
     }
   </style>
 </head>
@@ -828,85 +750,63 @@
 <div class="progress-bar">
   <div class="progress-fill" id="progress-fill" style="width: 25%"></div>
 </div>
-
 <p class="step-label" id="step-label">Step 1 of 2 — Before You Upload</p>
+
 
 <!-- ══════════════════════════════════════
      STATE 1: INTRO / CHECKLIST
 ══════════════════════════════════════ -->
 <div id="state-intro" class="state active">
-
   <h1>A few things make all the difference.</h1>
   <p class="intro-sub">Your color analysis is only as good as your photos. These guidelines take two minutes to follow and dramatically improve accuracy. Read each one — there's a reason behind every ask.</p>
 
   <p class="checklist-heading">Photo Checklist</p>
-
   <div class="checklist">
-
     <div class="checklist-item">
-      <div class="check-icon">
-        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="check-icon"><svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="checklist-text">
         <strong>Natural daylight only</strong>
-        <p>Step near a window or go outside. Indoor bulbs — warm, cool, fluorescent — cast a color temperature onto your skin that can shift your analysis by an entire season family. Overcast daylight is perfect; harsh direct sun is the one exception to avoid.</p>
+        <p>Step near a window or go outside. Indoor bulbs cast a color temperature onto your skin that can shift your analysis by an entire season family. Overcast daylight is perfect; harsh direct sun is the one exception to avoid.</p>
       </div>
     </div>
-
     <div class="checklist-item">
-      <div class="check-icon">
-        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="check-icon"><svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="checklist-text">
         <strong>No makeup, no filter</strong>
-        <p>We're reading your natural skin tone, lip color, and eye color. Foundation changes your undertone reading. Filters, even "natural" ones, alter hue values in ways that are hard to reverse. Come as you are — that's exactly what we need.</p>
+        <p>We're reading your natural skin tone, lip color, and eye color. Foundation changes your undertone reading. Filters, even "natural" ones, alter hue values in ways that are hard to reverse.</p>
       </div>
     </div>
-
     <div class="checklist-item">
-      <div class="check-icon">
-        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="check-icon"><svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="checklist-text">
         <strong>Face centered, shoulders in frame</strong>
-        <p>We analyze the color relationship between your face and your natural coloring below the chin — vein color, any chest freckles, and the transition from face to neck all contribute. Cropped headshots lose that context.</p>
+        <p>We analyze the color relationship between your face and your natural coloring below the chin — vein color, any chest freckles, and the face-to-neck transition all contribute.</p>
       </div>
     </div>
-
     <div class="checklist-item">
-      <div class="check-icon">
-        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="check-icon"><svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="checklist-text">
         <strong>Natural hair visible</strong>
-        <p>Your natural hair color is a key data point — it tells us whether your coloring is high contrast, soft, or muted, and whether your warmth is dominant or recessive. Pulled back is fine; dyed is not ideal, but note it in your optional comments.</p>
+        <p>Your natural hair color is a key data point — it tells us whether your coloring is high contrast, soft, or muted. Pulled back is fine; dyed is not ideal, but note it in your optional comments.</p>
       </div>
     </div>
-
     <div class="checklist-item">
-      <div class="check-icon">
-        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="check-icon"><svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="checklist-text">
         <strong>Plain background, neutral clothing</strong>
-        <p>Busy backgrounds and colorful tops create color bouncing — reflected hues that contaminate your skin tone reading. Wear a white t-shirt or drape a white towel over your shoulders. A plain wall behind you is ideal.</p>
+        <p>Busy backgrounds and colorful tops create color bouncing — reflected hues that contaminate your skin tone reading. Wear a white t-shirt or drape a white towel over your shoulders.</p>
       </div>
     </div>
-
     <div class="checklist-item">
-      <div class="check-icon">
-        <svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="check-icon"><svg viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#141210" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="checklist-text">
         <strong>Eyes open, looking toward the light</strong>
-        <p>Eye color is one of three primary signals we use. Pupils contract in bright light and reveal your true iris color — a subtle but meaningful difference for distinguishing cool-tinted eyes from warm-tinted ones.</p>
+        <p>Eye color is one of three primary signals we use. Pupils contract in bright light and reveal your true iris color — a subtle but meaningful difference for distinguishing cool-tinted from warm-tinted eyes.</p>
       </div>
     </div>
-
   </div>
 
-  <button class="btn-primary btn-gold" onclick="goToUpload()">I'm ready — continue to upload</button>
-
+  <button class="btn-primary btn-accent" onclick="goToUpload()">I'm ready — continue to upload</button>
 </div>
 
 
@@ -914,23 +814,15 @@
      STATE 2: UPLOAD
 ══════════════════════════════════════ -->
 <div id="state-upload" class="state">
-
   <h2>Upload your photos.</h2>
-  <p class="upload-sub">Add one required photo and up to two more from different angles or lighting conditions. More photos = more confident results.</p>
+  <p class="upload-sub">Add one required photo and up to two more from different angles or lighting. More photos = more confident results.</p>
 
   <div class="upload-slots">
-
-    <!-- Slot 1 -->
-    <div class="upload-slot" id="slot-1"
-         ondragover="handleDragOver(event, 1)"
-         ondragleave="handleDragLeave(event, 1)"
-         ondrop="handleDrop(event, 1)">
+    <div class="upload-slot" id="slot-1" ondragover="handleDragOver(event,1)" ondragleave="handleDragLeave(event,1)" ondrop="handleDrop(event,1)">
       <div class="upload-slot-inner" onclick="triggerFileInput(1)">
         <div class="slot-preview" id="preview-1">
           <img id="preview-img-1" alt="" />
-          <span class="slot-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="slot-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
         <div class="slot-info">
           <p class="slot-label">Photo 1 — Required</p>
@@ -939,20 +831,14 @@
         <span class="slot-status empty" id="status-1">Add photo</span>
       </div>
       <div class="slot-error-msg" id="error-1"></div>
-      <input type="file" id="file-input-1" accept="image/*" onchange="handleFileSelect(event, 1)" />
+      <input type="file" id="file-input-1" accept="image/*" onchange="handleFileSelect(event,1)" />
     </div>
 
-    <!-- Slot 2 -->
-    <div class="upload-slot" id="slot-2"
-         ondragover="handleDragOver(event, 2)"
-         ondragleave="handleDragLeave(event, 2)"
-         ondrop="handleDrop(event, 2)">
+    <div class="upload-slot" id="slot-2" ondragover="handleDragOver(event,2)" ondragleave="handleDragLeave(event,2)" ondrop="handleDrop(event,2)">
       <div class="upload-slot-inner" onclick="triggerFileInput(2)">
         <div class="slot-preview" id="preview-2">
           <img id="preview-img-2" alt="" />
-          <span class="slot-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="slot-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
         <div class="slot-info">
           <p class="slot-label">Photo 2 — Optional</p>
@@ -961,20 +847,14 @@
         <span class="slot-status empty" id="status-2">Add photo</span>
       </div>
       <div class="slot-error-msg" id="error-2"></div>
-      <input type="file" id="file-input-2" accept="image/*" onchange="handleFileSelect(event, 2)" />
+      <input type="file" id="file-input-2" accept="image/*" onchange="handleFileSelect(event,2)" />
     </div>
 
-    <!-- Slot 3 -->
-    <div class="upload-slot" id="slot-3"
-         ondragover="handleDragOver(event, 3)"
-         ondragleave="handleDragLeave(event, 3)"
-         ondrop="handleDrop(event, 3)">
+    <div class="upload-slot" id="slot-3" ondragover="handleDragOver(event,3)" ondragleave="handleDragLeave(event,3)" ondrop="handleDrop(event,3)">
       <div class="upload-slot-inner" onclick="triggerFileInput(3)">
         <div class="slot-preview" id="preview-3">
           <img id="preview-img-3" alt="" />
-          <span class="slot-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+          <span class="slot-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="#7a7268" stroke-width="1.5"/><circle cx="8.5" cy="10.5" r="1.5" stroke="#7a7268" stroke-width="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="#7a7268" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
         <div class="slot-info">
           <p class="slot-label">Photo 3 — Optional</p>
@@ -983,17 +863,14 @@
         <span class="slot-status empty" id="status-3">Add photo</span>
       </div>
       <div class="slot-error-msg" id="error-3"></div>
-      <input type="file" id="file-input-3" accept="image/*" onchange="handleFileSelect(event, 3)" />
+      <input type="file" id="file-input-3" accept="image/*" onchange="handleFileSelect(event,3)" />
     </div>
-
   </div>
 
-  <p class="upload-hint">Photos are processed locally — they are not stored on our servers.</p>
-
-  <button class="btn-primary btn-gold" id="analyze-btn" onclick="startAnalysis()" disabled style="opacity:0.45; cursor:not-allowed;">
+  <p class="upload-hint">Photos are processed locally for validation, then sent securely for analysis. They are not stored.</p>
+  <button class="btn-primary btn-accent" id="analyze-btn" onclick="startAnalysis()" disabled style="opacity:0.45;cursor:not-allowed;">
     Analyze my colors
   </button>
-
 </div>
 
 
@@ -1002,388 +879,128 @@
 ══════════════════════════════════════ -->
 <div id="state-loading" class="state">
   <div class="loading-ring"></div>
-  <p class="loading-text" id="loading-text">Reading your undertones...</p>
-  <p class="loading-note">This usually takes about 15 seconds.</p>
+  <p class="loading-text" id="loading-text">Reading your undertones…</p>
+  <p class="loading-note">This usually takes about 15–20 seconds.</p>
 </div>
 
 
 <!-- ══════════════════════════════════════
-     STATE 4: RESULT (MOCKED — LIGHT SPRING)
+     STATE 4: ERROR
+══════════════════════════════════════ -->
+<div id="state-error" class="state">
+  <h2 id="error-heading">We need a clearer photo.</h2>
+  <p id="error-message">We weren't able to determine your season from these photos.</p>
+  <div class="error-tips">
+    <h3>Tips for a better photo</h3>
+    <ul>
+      <li>Stand near a window in natural daylight (not direct sun)</li>
+      <li>No makeup, filters, or heavy retouching</li>
+      <li>Face centered and fully visible, shoulders in frame</li>
+      <li>Plain white or neutral background behind you</li>
+      <li>Eyes open and looking toward the light source</li>
+    </ul>
+  </div>
+  <button class="btn-primary btn-accent" onclick="goToUpload()" style="max-width:320px;margin:0 auto;display:block;">
+    Try again
+  </button>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     STATE 5: RESULT (DYNAMIC)
 ══════════════════════════════════════ -->
 <div id="state-result" class="state">
 
-  <!-- Season Reveal -->
   <div class="result-reveal">
     <div class="result-badge">Your Color Analysis Result</div>
-    <h1 class="result-season-name">Light Spring</h1>
-    <p class="result-season-family">Spring Family · Warm &amp; Clear · Light Value</p>
-    <p class="result-quote">"The season of new leaves and early blossoms — warm, delicate, and luminous."</p>
-    <p class="result-description">Your coloring is defined by warmth and lightness working together. Your best colors reflect the freshness of early spring: clear, warm, and never heavy. When you wear your palette, your skin glows, your eyes brighten, and your natural contrast reads as intentional rather than washed out.</p>
+    <h1 class="result-season-name" id="r-season-name"></h1>
+    <p class="result-season-family" id="r-season-family"></p>
+    <p class="result-quote" id="r-character"></p>
+    <p class="result-mantra" id="r-mantra"></p>
+    <span class="result-confidence" id="r-confidence"></span>
   </div>
 
-
-  <!-- Section 1: Palette -->
-  <div class="result-section">
+  <!-- Palette -->
+  <div class="result-section" id="section-palette">
     <p class="result-section-label">01 — Your Palette</p>
-    <h3>26 Colors That Were Made for You</h3>
-    <p>Every color here harmonizes with your natural undertone and value. You'll notice they share a quality: warmth, clarity, and a light-to-medium depth. Save this page for reference when you shop.</p>
-
-    <div class="palette-grid">
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#FAF5EB;"></div><span class="swatch-name">Warm White</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#FFF8E0;"></div><span class="swatch-name">Ivory</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5E6C0;"></div><span class="swatch-name">Warm Cream</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F2C882;"></div><span class="swatch-name">Honey Gold</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#EDB347;"></div><span class="swatch-name">Warm Gold</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5E070;"></div><span class="swatch-name">Buttercup</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5D4A0;"></div><span class="swatch-name">Peach Cream</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5C4A0;"></div><span class="swatch-name">Warm Peach</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F0A878;"></div><span class="swatch-name">Apricot</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F07050;"></div><span class="swatch-name">Warm Coral</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#E8602A;"></div><span class="swatch-name">True Coral</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F5A0B0;"></div><span class="swatch-name">Warm Pink</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#F06068;"></div><span class="swatch-name">Clear Rose</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#E0708A;"></div><span class="swatch-name">Warm Raspberry</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#D45040;"></div><span class="swatch-name">Tomato Red</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#B0D888;"></div><span class="swatch-name">Light Apple</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#90C868;"></div><span class="swatch-name">Spring Green</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#A8D4A0;"></div><span class="swatch-name">Mint Leaf</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#80C8E0;"></div><span class="swatch-name">Sky Blue</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#5BAED4;"></div><span class="swatch-name">Warm Aqua</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#A0C8E8;"></div><span class="swatch-name">Powder Blue</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#A0A8E8;"></div><span class="swatch-name">Warm Periwinkle</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#C8A8D8;"></div><span class="swatch-name">Lilac</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#C8B8A0;"></div><span class="swatch-name">Warm Tan</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#D4C8B0;"></div><span class="swatch-name">Warm Linen</span></div>
-      <div class="palette-swatch"><div class="swatch-circle" style="background:#B8A090;"></div><span class="swatch-name">Warm Blush Nude</span></div>
-    </div>
+    <h3>Colors That Were Made for You</h3>
+    <p id="r-palette-note">Every color here harmonizes with your natural undertone and value. Save this page for reference when you shop.</p>
+    <div class="palette-grid" id="r-palette-grid"></div>
   </div>
 
-
-  <!-- Section 2: Avoid -->
-  <div class="result-section">
+  <!-- Avoid -->
+  <div class="result-section" id="section-avoid">
     <p class="result-section-label">02 — Colors to Avoid</p>
     <h3>What Competes with Your Coloring</h3>
-    <p>These colors don't fight your coloring in a dramatic way — they simply pull focus from your face, make you look tired, or create a muddiness that none of your features deserve. This is especially true near the face.</p>
-
-    <div class="avoid-grid">
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#708090;"></div><span class="swatch-name">Cool Grey</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#2F4F4F;"></div><span class="swatch-name">Dark Teal</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#8B6565;"></div><span class="swatch-name">Dusty Rose</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#4B3832;"></div><span class="swatch-name">Dark Brown</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#4B0082;"></div><span class="swatch-name">Deep Purple</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#000080;"></div><span class="swatch-name">Navy</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#556B2F;"></div><span class="swatch-name">Olive</span></div>
-      <div class="palette-swatch avoid-swatch"><div class="swatch-circle" style="background:#141210;"></div><span class="swatch-name">True Black</span></div>
-    </div>
-
-    <p style="margin-top:20px;">A note on black: it's not forbidden as an accent or in a garment far from your face. But black near the jawline creates a harsh shadow that emphasizes any unevenness in skin tone. Swap it for warm charcoal, deep cocoa, or your warmest deep palette colors.</p>
+    <p>These colors don't fight your coloring dramatically — they simply pull focus from your face or create a flatness that your features don't deserve.</p>
+    <div class="palette-grid avoid-grid" id="r-avoid-grid"></div>
   </div>
 
-
-  <!-- Section 3: Natural Features -->
+  <!-- Natural Features -->
   <div class="result-section">
     <p class="result-section-label">03 — Your Natural Features</p>
     <h3>What We Read in Your Coloring</h3>
-    <p>These are the characteristics that define your season and distinguish Light Spring from its neighbors.</p>
-
-    <div class="feature-grid">
-      <div class="feature-cell">
-        <p class="feature-cell-label">Dominant Trait</p>
-        <p class="feature-cell-value">Warmth — your coloring reads warm before anything else</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Undertone</p>
-        <p class="feature-cell-value">Warm golden-peach, with a clear (not muted) quality</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Value Range</p>
-        <p class="feature-cell-value">Light to medium — your coloring doesn't carry depth well</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Contrast Level</p>
-        <p class="feature-cell-value">Low to medium — hair and skin are relatively close in value</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Clarity</p>
-        <p class="feature-cell-value">Clear — you carry bright, clean colors better than dusty or muted ones</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Eye Color Signal</p>
-        <p class="feature-cell-value">Warm-tinted iris with clear whites — no cool cast</p>
-      </div>
-    </div>
+    <p id="r-feature-notes"></p>
+    <div class="feature-grid" id="r-feature-grid"></div>
   </div>
 
-
-  <!-- Section 4: Choose X Over Y -->
+  <!-- Choose X Over Y -->
   <div class="result-section">
     <p class="result-section-label">04 — Choose This Over That</p>
-    <h3>10 Swaps That Will Change How You Look</h3>
-    <p>When you're shopping and can't cross-reference your full palette, these comparisons give you an instinct to work from.</p>
-
-    <div class="pairs-list">
-      <div class="pair-row">
-        <span class="pair-yes">Warm coral</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Cool fuchsia</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Ivory or warm white</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Bright stark white</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Sky blue or aqua</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Steel blue or navy</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Warm gold or honey</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Cool silver or platinum</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Spring green or apple</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Olive or khaki</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Warm tan or linen</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Greige or cool taupe</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Lilac or warm periwinkle</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Cool violet or deep purple</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Tomato red or clear rose</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Burgundy or wine</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Warm peach or apricot</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">Dusty mauve or muted blush</span>
-      </div>
-      <div class="pair-row">
-        <span class="pair-yes">Warm charcoal (if needed)</span>
-        <span class="pair-arrow">→</span>
-        <span class="pair-no">True black near the face</span>
-      </div>
-    </div>
+    <h3>Swaps That Will Change How You Look</h3>
+    <p>When you can't cross-reference your full palette, these comparisons give you a reliable instinct.</p>
+    <div class="pairs-list" id="r-pairs-list"></div>
   </div>
 
-
-  <!-- Section 5: Best Neutrals -->
+  <!-- Best Neutrals -->
   <div class="result-section">
     <p class="result-section-label">05 — Your Best Neutrals</p>
-    <h3>The Four Colors to Build Your Wardrobe Around</h3>
-    <p>These are your most versatile, wearable non-colors — the ones that can anchor any outfit while still working with your coloring.</p>
-
-    <div class="neutrals-grid">
-      <div class="neutral-card">
-        <div class="neutral-swatch" style="background:#FAF5EB;"></div>
-        <div>
-          <p class="neutral-name">Warm Ivory</p>
-          <p class="neutral-desc">Your white. Wear near the face instead of stark white.</p>
-        </div>
-      </div>
-      <div class="neutral-card">
-        <div class="neutral-swatch" style="background:#D4C8B0;"></div>
-        <div>
-          <p class="neutral-name">Warm Linen</p>
-          <p class="neutral-desc">A natural base tone. Pairs with everything in your palette.</p>
-        </div>
-      </div>
-      <div class="neutral-card">
-        <div class="neutral-swatch" style="background:#C8B8A0;"></div>
-        <div>
-          <p class="neutral-name">Warm Tan</p>
-          <p class="neutral-desc">Your navy equivalent. Grounded but never harsh.</p>
-        </div>
-      </div>
-      <div class="neutral-card">
-        <div class="neutral-swatch" style="background:#6B5A48;"></div>
-        <div>
-          <p class="neutral-name">Warm Cocoa</p>
-          <p class="neutral-desc">Your dark anchor. Use where others might use black.</p>
-        </div>
-      </div>
-    </div>
+    <h3>Colors to Build Your Wardrobe Around</h3>
+    <p>These are your most versatile anchors — non-colors that still work with your coloring.</p>
+    <div class="neutrals-grid" id="r-neutrals-grid"></div>
   </div>
 
-
-  <!-- Section 6: Patterns -->
+  <!-- Patterns -->
   <div class="result-section">
     <p class="result-section-label">06 — Patterns &amp; Prints</p>
     <h3>How Prints Work for Your Season</h3>
-    <p>Your coloring is delicate enough that heavy, high-contrast patterns can overwhelm it. The prints that work best for you tend to be organic, light-value, and warm-toned.</p>
-    <p>Look for prints where the background color is one of your palette colors, and the pattern elements are also within your palette — this keeps the overall effect harmonious rather than clashing.</p>
-
-    <div class="tag-list">
-      <span class="tag highlight">Watercolor florals</span>
-      <span class="tag highlight">Warm ditsy prints</span>
-      <span class="tag highlight">Soft paisley</span>
-      <span class="tag highlight">Warm animal print</span>
-      <span class="tag highlight">Light stripe in palette colors</span>
-      <span class="tag">Botanical prints</span>
-      <span class="tag">Sun-faded patterns</span>
-      <span class="tag">Warm ikat</span>
-      <span class="tag">Loose geometric</span>
-      <span class="tag">Abstract warm watercolor</span>
-    </div>
-
-    <p style="margin-top:20px;">Avoid: high-contrast black-and-white prints, cool geometric patterns, dark moody florals, and anything with a black background. These read as a costume on your coloring — the pattern dominates, and you disappear into it.</p>
+    <p id="r-patterns"></p>
   </div>
 
-
-  <!-- Section 7: Hair -->
+  <!-- Hair -->
   <div class="result-section">
     <p class="result-section-label">07 — Hair</p>
     <h3>Colors That Look Like They Grew There</h3>
-    <p>The best hair color for a Light Spring is one that looks plausible for your coloring — warm, clear, and light-to-medium in depth. When hair looks natural, the eye goes to the face. When it doesn't, the eye goes to the hair.</p>
-
-    <div class="tag-list" style="margin-bottom: 20px;">
-      <span class="tag highlight">Golden blonde</span>
-      <span class="tag highlight">Strawberry blonde</span>
-      <span class="tag highlight">Warm honey highlights</span>
-      <span class="tag highlight">Light warm auburn</span>
-      <span class="tag highlight">Sun-kissed balayage</span>
-      <span class="tag">Caramel lowlights</span>
-      <span class="tag">Warm coppery tones</span>
-    </div>
-
-    <p><strong style="font-family: 'Josefin Sans', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">Approach with caution:</strong></p>
-    <div class="tag-list" style="margin-top: 10px;">
-      <span class="tag">Cool ash blonde</span>
-      <span class="tag">Platinum</span>
-      <span class="tag">Jet black</span>
-      <span class="tag">Cool dark brown</span>
-      <span class="tag">Violet-toned hair</span>
-    </div>
-
-    <p style="margin-top:20px;">Cool or very dark hair color can create a stark contrast against your light, warm face. If you're going darker, stay in the warm brown family and keep it at least two shades lighter than you think you want to go.</p>
+    <p id="r-hair"></p>
   </div>
 
-
-  <!-- Section 8: Makeup -->
+  <!-- Makeup -->
   <div class="result-section">
     <p class="result-section-label">08 — Makeup</p>
     <h3>A Palette That Enhances, Not Transforms</h3>
-    <p>Light Spring makeup should look like you, only more so. The goal is warmth, freshness, and clarity — not drama. When your makeup is in your palette, the overall look appears effortless even when it isn't.</p>
-
-    <div class="makeup-rows">
-      <div class="makeup-row">
-        <span class="makeup-category">Foundation</span>
-        <span class="makeup-value">Warm or neutral-warm undertone. Look for descriptors like "peach," "golden," "warm beige." Avoid anything described as "pink," "cool," or "rosy."</span>
-      </div>
-      <div class="makeup-row">
-        <span class="makeup-category">Blush</span>
-        <span class="makeup-value">Warm peach, apricot, and soft coral work beautifully. Avoid cool pinks and berry tones. A light dusting of warm peach can double as an eyeshadow.</span>
-      </div>
-      <div class="makeup-row">
-        <span class="makeup-category">Lip</span>
-        <span class="makeup-value">Warm coral, peachy-pink, and clear warm rose. Your lips likely have natural warmth — enhance it rather than replacing it with a cool or dark shade.</span>
-      </div>
-      <div class="makeup-row">
-        <span class="makeup-category">Eye Shadow</span>
-        <span class="makeup-value">Peach, warm taupe, warm gold, coral-toned champagne, and soft warm brown. Avoid grey, charcoal, and cool-toned purples near the eye — they flatten your features.</span>
-      </div>
-      <div class="makeup-row">
-        <span class="makeup-category">Liner</span>
-        <span class="makeup-value">Warm brown is your most flattering liner. Black liner can work for evening but should be smudged to soften it. Avoid stark black pencil for daytime.</span>
-      </div>
-      <div class="makeup-row">
-        <span class="makeup-category">Bronzer</span>
-        <span class="makeup-value">Yes — use a warm, golden-toned bronzer rather than a terracotta or cool-toned one. You tan beautifully and bronzer plays up that quality.</span>
-      </div>
-      <div class="makeup-row">
-        <span class="makeup-category">Highlighter</span>
-        <span class="makeup-value">Gold or champagne — never silver or icy pink. A warm dewy finish suits you more than a blinding metallic.</span>
-      </div>
-    </div>
+    <p id="r-makeup"></p>
   </div>
 
-
-  <!-- Section 9: Accessories -->
+  <!-- Accessories -->
   <div class="result-section">
     <p class="result-section-label">09 — Accessories</p>
     <h3>Metal, Stone, and Material</h3>
-
-    <div class="feature-grid">
-      <div class="feature-cell">
-        <p class="feature-cell-label">Metal</p>
-        <p class="feature-cell-value">Yellow gold, rose gold, warm brass, and burnished copper. Silver can work when it has warmth — white gold or platinum tend to look cold.</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Gemstones</p>
-        <p class="feature-cell-value">Warm topaz, citrine, amber, peridot, warm turquoise, and coral. Diamonds work when set in warm metals. Sapphires and amethysts can pull cool.</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Bags &amp; Shoes</p>
-        <p class="feature-cell-value">Warm tan, camel, cognac, warm taupe, and ivory. Avoid grey, true navy, and cool-toned black leathers — they visually disconnect from your coloring.</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Eyewear</p>
-        <p class="feature-cell-value">Warm tortoise, honey blonde acetate, warm gold frames, and light warm brown. Avoid stark black frames and cool grey metals near your face.</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Scarves &amp; Wraps</p>
-        <p class="feature-cell-value">Any palette color works beautifully as a scarf near the face — this is your best opportunity to experiment with bolder palette choices without committing to a full outfit.</p>
-      </div>
-      <div class="feature-cell">
-        <p class="feature-cell-label">Fabric Texture</p>
-        <p class="feature-cell-value">Soft, natural textures suit you — linen, cotton, light wool, silk. Heavy structured fabrics in dark colors can overwhelm your lightness. Stay in light-to-medium weights.</p>
-      </div>
-    </div>
+    <p id="r-accessories"></p>
   </div>
 
-
-  <!-- Section 10: Sister Seasons -->
+  <!-- Sister Seasons -->
   <div class="result-section">
-    <p class="result-section-label">10 — Neighboring Seasons</p>
-    <h3>Your Color Family</h3>
-    <p>Light Spring shares characteristics with two neighboring seasons. Understanding the overlap helps when you encounter colors that feel close but don't quite land.</p>
-
-    <div class="sisters-grid">
-      <div class="sister-card">
-        <p class="sister-name">True Spring</p>
-        <p class="sister-relation">Sister Season — same family</p>
-        <p class="sister-desc">True Spring shares your warmth but can carry slightly more saturation and a touch more depth. If a color looks right but a shade too vivid for you, it likely belongs to True Spring. You can borrow from True Spring as long as you keep the value light.</p>
-      </div>
-      <div class="sister-card">
-        <p class="sister-name">Light Summer</p>
-        <p class="sister-relation">Neighboring Season — shared value</p>
-        <p class="sister-desc">Light Summer shares your lightness but leans slightly cooler and softer. Colors at the overlap point — powder blue, soft pink, light lavender — can work for both. If something feels almost right but faintly cool, it may be a Light Summer color wandering into your territory.</p>
-      </div>
-    </div>
-
-    <p style="margin-top: 24px;">If you ever feel uncertain between Light Spring and True Spring, the tell is clarity: True Spring can handle more vivid, saturated color. If a color is vivid and feels too strong, step toward Light Spring. If a color feels warm and right but slightly muted, consider that it may be crossing toward Light Summer — and can still work for you if the warmth is there.</p>
+    <p class="result-section-label">10 — Your Color Family</p>
+    <h3>Neighboring Seasons</h3>
+    <p>Understanding the overlap helps when you encounter colors that feel close but don't quite land.</p>
+    <div class="sisters-grid" id="r-sisters-grid"></div>
   </div>
 
-
-  <!-- Section 11: Shopping Guidance -->
-  <div class="result-section">
-    <p class="result-section-label">11 — Shopping With Your Season</p>
-    <h3>How to Use This in Real Life</h3>
-    <p>A color analysis is most valuable when it changes how you make decisions, not when it creates rules that paralyze you. Here's how to put this to work practically.</p>
-    <p><strong style="font-weight:400;">The 3-second test:</strong> When you pick something up, ask — is this warm or cool? Is it light or dark? Clear or muted? If the answer matches your coloring (warm, light, clear), it's worth trying. If it fights all three, put it back.</p>
-    <p><strong style="font-weight:400;">Near the face:</strong> This is where your palette matters most. A navy blazer at the waist is far less impactful than a navy turtleneck. Prioritize your palette for necklines, scarves, earrings, and frames.</p>
-    <p><strong style="font-weight:400;">Occasion exceptions:</strong> A black dress for a formal event is fine. Your coloring won't collapse. The goal is to stock your everyday wardrobe with colors that make getting dressed easier and better — not to create anxiety over every purchase.</p>
-    <p><strong style="font-weight:400;">When in doubt, test with a scarf:</strong> Drape a color near your face in a mirror, ideally in natural light. If your skin looks clearer and your eyes brighter, it's in your zone. If you look tired, the color is competing.</p>
-  </div>
-
-
-  <!-- Result CTAs -->
-  <div class="result-cta-section">
-    <h3>Ready to shop your season?</h3>
-    <p>Explore curated picks for Light Spring, or read more about what makes the Spring family unique.</p>
-    <div class="cta-buttons">
-      <a href="https://goldenhue.shop/shop?season=light-spring" class="btn-primary btn-gold">Shop Light Spring Picks</a>
-      <a href="/blog.html" class="btn-outline">Read the Blog</a>
-    </div>
+  <!-- Actions -->
+  <div class="result-actions">
+    <button class="btn-primary btn-accent" onclick="window.print()" style="width:auto;padding:16px 32px;">Save my results (PDF)</button>
+    <a id="r-shop-link" href="https://goldenhue.shop/shop" class="btn-primary" style="width:auto;padding:16px 32px;">Shop my season</a>
+    <a href="/blog.html" class="btn-outline">Read the blog</a>
   </div>
 
 </div>
@@ -1408,7 +1025,7 @@
   <div class="footer-top">
     <div>
       <h2 class="footer-headline">Discover your season.</h2>
-      <p class="footer-sub">Color analysis, simplified. Know what to buy, what to skip, and why it works — delivered instantly.</p>
+      <p class="footer-sub">Color analysis, simplified. Know what to buy, what to skip, and why it works.</p>
     </div>
     <div>
       <form class="footer-form" name="footer-waitlist" method="POST" data-netlify="true">
@@ -1426,193 +1043,432 @@
 
 
 <script>
-  // ── STATE MANAGEMENT ──
-  const states = ['intro', 'upload', 'loading', 'result'];
-  const progressMap = { intro: '25%', upload: '50%', loading: '75%', result: '100%' };
-  const labelMap = {
-    intro: 'Step 1 of 2 — Before You Upload',
-    upload: 'Step 2 of 2 — Upload Your Photos',
-    loading: 'Analyzing...',
-    result: 'Your Results'
-  };
+// ════════════════════════════════════════════════
+// SEASON CONFIG — accent color + family per season
+// ════════════════════════════════════════════════
+const SEASON_CONFIG = {
+  'Light Spring':   { accent: '#f2c882', family: 'Spring' },
+  'True Spring':    { accent: '#e8602a', family: 'Spring' },
+  'Bright Spring':  { accent: '#f5c518', family: 'Spring' },
+  'Light Summer':   { accent: '#8ec8d8', family: 'Summer' },
+  'True Summer':    { accent: '#5a88c0', family: 'Summer' },
+  'Soft Summer':    { accent: '#c080b0', family: 'Summer' },
+  'Soft Autumn':    { accent: '#d46828', family: 'Autumn' },
+  'True Autumn':    { accent: '#b83810', family: 'Autumn' },
+  'Dark Autumn':    { accent: '#6a2810', family: 'Autumn' },
+  'True Winter':    { accent: '#1a58b0', family: 'Winter' },
+  'Deep Winter':    { accent: '#780028', family: 'Winter' },
+  'Bright Winter':  { accent: '#d80858', family: 'Winter' },
+};
 
-  function showState(name) {
-    states.forEach(s => {
-      document.getElementById('state-' + s).classList.remove('active');
-    });
-    document.getElementById('state-' + name).classList.add('active');
-    document.getElementById('progress-fill').style.width = progressMap[name];
-    document.getElementById('step-label').textContent = labelMap[name];
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// ════════════════════════════════════════════════
+// COLOR NAME → HEX LOOKUP
+// ════════════════════════════════════════════════
+const COLOR_MAP = {
+  // Whites & creams
+  'warm white': '#FAF5EB', 'ivory': '#FFF8E0', 'cream': '#FFFDD0', 'warm cream': '#F5E6C0',
+  'off white': '#F8F0E3', 'antique white': '#FAEBD7', 'linen': '#FAF0E6',
+  // Yellows & golds
+  'buttercup': '#F5E070', 'warm gold': '#EDB347', 'honey gold': '#F2C882',
+  'gold': '#FFD700', 'pale yellow': '#FFFF99', 'straw': '#E4D96F',
+  'yellow': '#FFE066', 'golden yellow': '#FFCC00', 'saffron': '#F4C430',
+  'amber': '#FFBF00', 'marigold': '#EAA221', 'mustard': '#FFDB58',
+  // Peaches & corals
+  'peach': '#FFCBA4', 'warm peach': '#F5C4A0', 'peach cream': '#F5D4A0',
+  'apricot': '#F0A878', 'coral': '#FF7F50', 'warm coral': '#F07050',
+  'true coral': '#E8602A', 'salmon': '#FA8072', 'light salmon': '#FFA07A',
+  // Pinks
+  'warm pink': '#F5A0B0', 'flamingo pink': '#F06068', 'flamingo': '#FC8EAC',
+  'rose': '#FF007F', 'clear rose': '#F06068', 'light pink': '#FFB6C1',
+  'blush': '#DE5D83', 'soft pink': '#FDBCB4', 'dusty rose': '#DCAE96',
+  'warm raspberry': '#E0708A', 'carnation': '#FF9EA0', 'pastel pink': '#F8C8D4',
+  'bubble gum': '#FC94AF', 'baby pink': '#F4C2C2',
+  // Reds
+  'tomato red': '#D45040', 'true red': '#CC0000', 'warm red': '#C0392B',
+  'brick red': '#CB4154', 'cherry': '#DE3163', 'crimson': '#DC143C',
+  'red': '#FF0000', 'scarlet': '#FF2400', 'ruby': '#9B111E',
+  // Greens
+  'light apple': '#B0D888', 'spring green': '#90C868', 'mint leaf': '#A8D4A0',
+  'mint': '#98FF98', 'sage': '#BCB88A', 'lime': '#BFFF00',
+  'apple green': '#8DB600', 'warm green': '#7CFC00', 'leaf green': '#5D8A5E',
+  'olive': '#808000', 'khaki': '#C3B091', 'moss': '#8A9A5B',
+  'forest green': '#228B22', 'dark green': '#006400', 'hunter green': '#355E3B',
+  'emerald': '#50C878', 'jade': '#00A86B', 'seafoam': '#9FE2BF',
+  'teal': '#008080', 'dark teal': '#2F4F4F',
+  // Blues
+  'sky blue': '#80C8E0', 'warm aqua': '#5BAED4', 'powder blue': '#A0C8E8',
+  'aqua': '#00FFFF', 'light blue': '#ADD8E6', 'cornflower blue': '#6495ED',
+  'periwinkle': '#CCCCFF', 'warm periwinkle': '#A0A8E8', 'denim': '#1560BD',
+  'cobalt': '#0047AB', 'royal blue': '#4169E1', 'navy': '#000080',
+  'steel blue': '#4682B4', 'cool blue': '#5B92D1', 'slate blue': '#6A5ACD',
+  'icy blue': '#D6E4F0', 'soft blue': '#A2C4D0',
+  // Purples
+  'lilac': '#C8A8D8', 'lavender': '#E6E6FA', 'warm lavender': '#C8A8D8',
+  'violet': '#8F00FF', 'purple': '#800080', 'deep purple': '#4B0082',
+  'plum': '#8E4585', 'mauve': '#E0B0FF', 'orchid': '#DA70D6',
+  'heather': '#9E7BB5', 'amethyst': '#9966CC', 'soft violet': '#C4A4D4',
+  // Neutrals
+  'warm tan': '#C8B8A0', 'warm linen': '#D4C8B0', 'camel': '#C19A6B',
+  'warm cocoa': '#6B5A48', 'warm taupe': '#B5A090', 'warm grey': '#9E9590',
+  'cool grey': '#708090', 'charcoal': '#36454F', 'warm charcoal': '#4A4038',
+  'black': '#141210', 'true black': '#000000', 'dark brown': '#4B3832',
+  'cool brown': '#7B5B3A', 'chocolate': '#7B3F00', 'espresso': '#3A1A1A',
+  'light grey': '#D3D3D3', 'silver': '#C0C0C0', 'grey': '#808080',
+  'warm blush nude': '#B8A090', 'nude': '#E3BC9A', 'buff': '#F0DC82',
+  // Misc
+  'turquoise': '#40E0D0', 'warm turquoise': '#4AC4B8', 'cyan': '#00FFFF',
+  'hot pink': '#FF69B4', 'magenta': '#FF00FF', 'fuchsia': '#FF00FF',
+  'burgundy': '#800020', 'wine': '#722F37', 'maroon': '#800000',
+  'copper': '#B87333', 'bronze': '#CD7F32', 'rust': '#B7410E',
+  'terracotta': '#E2725B', 'sienna': '#A0522D', 'burnt orange': '#CC5500',
+  'tangerine': '#F28500', 'pumpkin': '#FF7518', 'orange': '#FFA500',
+};
 
-    if (name === 'loading') {
-      startLoadingCycle();
-    }
+function colorNameToHex(name) {
+  if (!name) return '#C8B8A0';
+  const lower = name.toLowerCase().trim();
+  if (COLOR_MAP[lower]) return COLOR_MAP[lower];
+  // Partial match — find first key containing all words
+  const words = lower.split(/\s+/);
+  for (const [key, hex] of Object.entries(COLOR_MAP)) {
+    if (words.every(w => key.includes(w))) return hex;
+  }
+  // Fallback: generate a deterministic muted color from the name string
+  let hash = 0;
+  for (let i = 0; i < lower.length; i++) hash = ((hash << 5) - hash) + lower.charCodeAt(i);
+  const h = Math.abs(hash) % 360;
+  return `hsl(${h}, 35%, 65%)`;
+}
+
+// ════════════════════════════════════════════════
+// STATE MANAGEMENT
+// ════════════════════════════════════════════════
+const STATES = ['intro', 'upload', 'loading', 'error', 'result'];
+const PROGRESS = { intro: '25%', upload: '50%', loading: '75%', error: '50%', result: '100%' };
+const LABELS   = {
+  intro:   'Step 1 of 2 — Before You Upload',
+  upload:  'Step 2 of 2 — Upload Your Photos',
+  loading: 'Analyzing…',
+  error:   'Step 2 of 2 — Upload Your Photos',
+  result:  'Your Results',
+};
+
+function showState(name) {
+  STATES.forEach(s => document.getElementById('state-' + s).classList.remove('active'));
+  document.getElementById('state-' + name).classList.add('active');
+  document.getElementById('progress-fill').style.width = PROGRESS[name];
+  document.getElementById('step-label').textContent = LABELS[name];
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (name === 'loading') startLoadingCycle();
+}
+
+function goToUpload() { showState('upload'); }
+
+// ════════════════════════════════════════════════
+// FILE HANDLING & VALIDATION
+// ════════════════════════════════════════════════
+const fileData = { 1: null, 2: null, 3: null }; // { file, base64, mediaType }
+
+function triggerFileInput(slot) { document.getElementById('file-input-' + slot).click(); }
+
+function handleDragOver(e, slot) {
+  e.preventDefault();
+  document.getElementById('slot-' + slot).classList.add('dragover');
+}
+function handleDragLeave(e, slot) {
+  document.getElementById('slot-' + slot).classList.remove('dragover');
+}
+function handleDrop(e, slot) {
+  e.preventDefault();
+  document.getElementById('slot-' + slot).classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file) processFile(file, slot);
+}
+function handleFileSelect(e, slot) {
+  const file = e.target.files[0];
+  if (file) processFile(file, slot);
+}
+
+function processFile(file, slot) {
+  if (!file.type.startsWith('image/')) {
+    showSlotError(slot, 'That file doesn\'t appear to be an image. Please choose a JPG, PNG, or HEIC file.');
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => validateImage(img, slot, url, file);
+  img.src = url;
+}
+
+function validateImage(img, slot, url, file) {
+  if (img.naturalWidth < 400 || img.naturalHeight < 400) {
+    showSlotError(slot, `This photo is too small (${img.naturalWidth}×${img.naturalHeight}px). We need at least 400×400px. Try a photo taken with your phone camera.`);
+    return;
+  }
+  if (img.naturalWidth > img.naturalHeight * 1.5) {
+    showSlotError(slot, 'This looks like a landscape photo. Portrait orientation (taller than wide) works best — it keeps your face and shoulders in frame.');
+    return;
   }
 
-  function goToUpload() {
-    showState('upload');
+  // Canvas brightness check
+  const canvas = document.createElement('canvas');
+  canvas.width = 100; canvas.height = 100;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, 100, 100);
+  const data = ctx.getImageData(0, 0, 100, 100).data;
+  let brightness = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    brightness += data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+  }
+  const avg = brightness / (100 * 100);
+
+  if (avg < 40) {
+    showSlotError(slot, 'This photo looks very dark. Natural daylight photos work best — try moving closer to a window or stepping outside.');
+    return;
+  }
+  if (avg > 230) {
+    showSlotError(slot, 'This photo looks overexposed. Direct flash or harsh sunlight washes out the skin tone details we need. Try bright indirect light instead.');
+    return;
   }
 
-  // ── FILE HANDLING ──
-  const fileData = { 1: null, 2: null, 3: null };
-
-  function triggerFileInput(slot) {
-    document.getElementById('file-input-' + slot).click();
-  }
-
-  function handleDragOver(e, slot) {
-    e.preventDefault();
-    document.getElementById('slot-' + slot).classList.add('dragover');
-  }
-
-  function handleDragLeave(e, slot) {
-    document.getElementById('slot-' + slot).classList.remove('dragover');
-  }
-
-  function handleDrop(e, slot) {
-    e.preventDefault();
-    document.getElementById('slot-' + slot).classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    if (file) processFile(file, slot);
-  }
-
-  function handleFileSelect(e, slot) {
-    const file = e.target.files[0];
-    if (file) processFile(file, slot);
-  }
-
-  function processFile(file, slot) {
-    if (!file.type.startsWith('image/')) {
-      showSlotError(slot, 'That file doesn\'t appear to be an image. Please choose a JPG, PNG, or HEIC file.');
-      return;
-    }
-
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.onload = function() {
-      validateImage(img, slot, url, file);
-    };
-    img.src = url;
-  }
-
-  function validateImage(img, slot, url, file) {
-    // Size check
-    if (img.naturalWidth < 400 || img.naturalHeight < 400) {
-      showSlotError(slot, 'This photo is quite small (' + img.naturalWidth + '×' + img.naturalHeight + 'px). For accurate results, we need at least 400×400 pixels. Try a photo taken with your phone camera.');
-      return;
-    }
-
-    // Orientation check
-    if (img.naturalWidth > img.naturalHeight * 1.5) {
-      showSlotError(slot, 'This looks like a landscape-oriented photo. Portrait orientation (taller than wide) works best — it keeps your face and shoulders in frame together.');
-      return;
-    }
-
-    // Canvas brightness check
-    const canvas = document.createElement('canvas');
-    const size = 100;
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, size, size);
-    const data = ctx.getImageData(0, 0, size, size).data;
-
-    let totalBrightness = 0;
-    const pixelCount = size * size;
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i], g = data[i+1], b = data[i+2];
-      totalBrightness += (r * 0.299 + g * 0.587 + b * 0.114);
-    }
-    const avgBrightness = totalBrightness / pixelCount;
-
-    if (avgBrightness < 40) {
-      showSlotError(slot, 'This photo looks quite dark — average brightness is very low. Natural daylight photos work best. Try moving closer to a window or stepping outside.');
-      return;
-    }
-
-    if (avgBrightness > 230) {
-      showSlotError(slot, 'This photo looks overexposed. Direct sunlight or bright flash can wash out the skin tone details we need. Try a spot with bright but indirect natural light.');
-      return;
-    }
-
-    // All good
+  // Convert to base64 for API
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    const base64 = dataUrl.split(',')[1];
+    const mediaType = file.type || 'image/jpeg';
     clearSlotError(slot);
-    fileData[slot] = file;
+    fileData[slot] = { base64, mediaType };
     setSlotReady(slot, url);
     checkAnalyzeButton();
-  }
+  };
+  reader.readAsDataURL(file);
+}
 
-  function showSlotError(slot, msg) {
-    const errorEl = document.getElementById('error-' + slot);
-    errorEl.textContent = msg;
-    errorEl.classList.add('visible');
-    const statusEl = document.getElementById('status-' + slot);
-    statusEl.textContent = 'Issue';
-    statusEl.className = 'slot-status error';
-  }
+function showSlotError(slot, msg) {
+  const el = document.getElementById('error-' + slot);
+  el.textContent = msg;
+  el.classList.add('visible');
+  const s = document.getElementById('status-' + slot);
+  s.textContent = 'Issue'; s.className = 'slot-status error';
+  fileData[slot] = null;
+  checkAnalyzeButton();
+}
+function clearSlotError(slot) {
+  const el = document.getElementById('error-' + slot);
+  el.textContent = ''; el.classList.remove('visible');
+}
+function setSlotReady(slot, url) {
+  const imgEl = document.getElementById('preview-img-' + slot);
+  imgEl.src = url; imgEl.classList.add('loaded');
+  const s = document.getElementById('status-' + slot);
+  s.textContent = 'Ready ✓'; s.className = 'slot-status ready';
+}
+function checkAnalyzeButton() {
+  const btn = document.getElementById('analyze-btn');
+  const ok = !!fileData[1];
+  btn.disabled = !ok;
+  btn.style.opacity = ok ? '1' : '0.45';
+  btn.style.cursor = ok ? 'pointer' : 'not-allowed';
+}
 
-  function clearSlotError(slot) {
-    const errorEl = document.getElementById('error-' + slot);
-    errorEl.textContent = '';
-    errorEl.classList.remove('visible');
-  }
+// ════════════════════════════════════════════════
+// LOADING CYCLE
+// ════════════════════════════════════════════════
+const LOADING_MESSAGES = [
+  'Reading your undertones…',
+  'Mapping your season…',
+  'Identifying your best neutrals…',
+  'Checking your value range…',
+  'Almost there…',
+];
+let loadingInterval = null;
+let loadingIdx = 0;
 
-  function setSlotReady(slot, url) {
-    const imgEl = document.getElementById('preview-img-' + slot);
-    imgEl.src = url;
-    imgEl.classList.add('loaded');
-    const statusEl = document.getElementById('status-' + slot);
-    statusEl.textContent = 'Ready ✓';
-    statusEl.className = 'slot-status ready';
-  }
-
-  function checkAnalyzeButton() {
-    const btn = document.getElementById('analyze-btn');
-    if (fileData[1]) {
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.style.cursor = 'pointer';
-    }
-  }
-
-  // ── LOADING & ANALYSIS ──
-  const loadingMessages = [
-    'Reading your undertones…',
-    'Mapping your season…',
-    'Identifying your best neutrals…',
-    'Checking your value range…',
-    'Almost there…'
-  ];
-  let loadingInterval = null;
-  let loadingIndex = 0;
-
-  function startLoadingCycle() {
-    const el = document.getElementById('loading-text');
-    loadingIndex = 0;
-    el.textContent = loadingMessages[0];
-    el.classList.add('visible');
-
-    loadingInterval = setInterval(() => {
-      el.classList.remove('visible');
-      setTimeout(() => {
-        loadingIndex = (loadingIndex + 1) % loadingMessages.length;
-        el.textContent = loadingMessages[loadingIndex];
-        el.classList.add('visible');
-      }, 600);
-    }, 2800);
-  }
-
-  function startAnalysis() {
-    if (!fileData[1]) return;
-    showState('loading');
-
-    // Simulate analysis time, then show result
+function startLoadingCycle() {
+  const el = document.getElementById('loading-text');
+  loadingIdx = 0;
+  el.textContent = LOADING_MESSAGES[0];
+  el.classList.add('visible');
+  if (loadingInterval) clearInterval(loadingInterval);
+  loadingInterval = setInterval(() => {
+    el.classList.remove('visible');
     setTimeout(() => {
+      loadingIdx = (loadingIdx + 1) % LOADING_MESSAGES.length;
+      el.textContent = LOADING_MESSAGES[loadingIdx];
+      el.classList.add('visible');
+    }, 600);
+  }, 2800);
+}
+
+// ════════════════════════════════════════════════
+// ANALYSIS — CALL API
+// ════════════════════════════════════════════════
+async function startAnalysis() {
+  if (!fileData[1]) return;
+  showState('loading');
+
+  const images = [1, 2, 3]
+    .filter(i => fileData[i])
+    .map(i => ({ data: fileData[i].base64, mediaType: fileData[i].mediaType }));
+
+  let result;
+  try {
+    const res = await fetch('/.netlify/functions/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ images }),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
       if (loadingInterval) clearInterval(loadingInterval);
-      showState('result');
-    }, 5200);
+      showError(json.message || 'Something went wrong. Please try again.');
+      return;
+    }
+
+    result = json;
+  } catch (err) {
+    if (loadingInterval) clearInterval(loadingInterval);
+    showError('We couldn\'t reach the server. Please check your connection and try again.');
+    return;
   }
+
+  if (loadingInterval) clearInterval(loadingInterval);
+  renderResult(result);
+}
+
+function showError(message) {
+  document.getElementById('error-message').textContent = message;
+  showState('error');
+}
+
+// ════════════════════════════════════════════════
+// RENDER RESULT
+// ════════════════════════════════════════════════
+function renderResult(data) {
+  const season = data.season || 'Light Spring';
+  const config = SEASON_CONFIG[season] || { accent: '#f2c882', family: 'Spring' };
+
+  // Update CSS accent variable globally
+  document.documentElement.style.setProperty('--season-accent', config.accent);
+
+  // Season reveal
+  document.getElementById('r-season-name').textContent = season;
+  document.getElementById('r-season-family').textContent =
+    `${config.family} Family · ${data.undertone || ''} · ${data.value || ''} Value`;
+  document.getElementById('r-character').textContent = data.character_description || '';
+  document.getElementById('r-mantra').textContent = data.color_mantra
+    ? `"${data.color_mantra}"`
+    : '';
+  const pct = data.confidence ? Math.round(data.confidence * 100) : null;
+  document.getElementById('r-confidence').textContent = pct ? `${pct}% confidence` : '';
+
+  // Shop link
+  const slug = season.toLowerCase().replace(/\s+/g, '-');
+  document.getElementById('r-shop-link').href = `https://goldenhue.shop/shop?season=${slug}`;
+
+  // Palette swatches
+  renderSwatches('r-palette-grid', data.best_colors || [], false);
+
+  // Avoid swatches
+  renderSwatches('r-avoid-grid', data.avoid_colors || [], true);
+
+  // Natural features grid
+  const features = [
+    { label: 'Dominant Trait', value: data.dominant_trait },
+    { label: 'Secondary Trait', value: data.secondary_trait },
+    { label: 'Undertone', value: data.undertone },
+    { label: 'Value', value: data.value },
+    { label: 'Chroma', value: data.chroma },
+    { label: 'Feature Notes', value: '' }, // span later
+  ];
+  document.getElementById('r-feature-notes').textContent = data.feature_notes || '';
+  const featureGrid = document.getElementById('r-feature-grid');
+  featureGrid.innerHTML = '';
+  features.slice(0, 5).forEach(f => {
+    if (!f.value) return;
+    const cell = document.createElement('div');
+    cell.className = 'feature-cell';
+    cell.innerHTML = `<p class="feature-cell-label">${esc(f.label)}</p><p class="feature-cell-value">${esc(f.value)}</p>`;
+    featureGrid.appendChild(cell);
+  });
+
+  // Choose X over Y
+  const pairsList = document.getElementById('r-pairs-list');
+  pairsList.innerHTML = '';
+  (data.choose_over || []).forEach(pair => {
+    const row = document.createElement('div');
+    row.className = 'pair-row';
+    row.innerHTML = `<span class="pair-yes">${esc(pair.choose)}</span><span class="pair-arrow">→</span><span class="pair-no">${esc(pair.over)}</span>`;
+    pairsList.appendChild(row);
+  });
+
+  // Best neutrals
+  const neutralsGrid = document.getElementById('r-neutrals-grid');
+  neutralsGrid.innerHTML = '';
+  (data.best_neutrals || []).forEach(n => {
+    const hex = colorNameToHex(n);
+    const card = document.createElement('div');
+    card.className = 'neutral-card';
+    card.innerHTML = `
+      <div class="neutral-swatch" style="background:${hex};"></div>
+      <div>
+        <p class="neutral-name">${esc(n)}</p>
+        <p class="neutral-desc">Your wardrobe anchor</p>
+      </div>`;
+    neutralsGrid.appendChild(card);
+  });
+
+  // Text sections
+  document.getElementById('r-patterns').textContent = data.patterns || '';
+  document.getElementById('r-hair').textContent = data.hair || '';
+  document.getElementById('r-makeup').textContent = data.makeup || '';
+  document.getElementById('r-accessories').textContent = data.accessories || '';
+
+  // Sister / neighboring seasons
+  const sistersGrid = document.getElementById('r-sisters-grid');
+  sistersGrid.innerHTML = '';
+  const sisterList = [];
+  if (data.sister_season) sisterList.push({ name: data.sister_season, rel: 'Sister Season' });
+  (data.neighboring_seasons || []).forEach(s => {
+    if (s !== data.sister_season) sisterList.push({ name: s, rel: 'Neighboring Season' });
+  });
+  sisterList.forEach(s => {
+    const cfg = SEASON_CONFIG[s.name] || {};
+    const card = document.createElement('div');
+    card.className = 'sister-card';
+    card.innerHTML = `
+      <p class="sister-name">${esc(s.name)}</p>
+      <p class="sister-relation">${esc(s.rel)}</p>
+      <p class="sister-desc">Shares characteristics with ${esc(season)}. If a color feels almost right but slightly off, it may belong to this season.</p>`;
+    sistersGrid.appendChild(card);
+  });
+
+  showState('result');
+}
+
+function renderSwatches(containerId, colorNames, isAvoid) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  colorNames.forEach(name => {
+    const hex = colorNameToHex(name);
+    const div = document.createElement('div');
+    div.className = 'palette-swatch' + (isAvoid ? ' avoid-swatch' : '');
+    div.innerHTML = `<div class="swatch-circle" style="background:${hex};"></div><span class="swatch-name">${esc(name)}</span>`;
+    container.appendChild(div);
+  });
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 </script>
 
 </body>
